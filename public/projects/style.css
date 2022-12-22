@@ -10,8 +10,7 @@
 body {
     color: #e3e3e3;
     background-color: var(--background);
-    height: 100vh;
-    /* overflow: hidden; */
+    /* height: 100vh; */
     margin: 0px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -51,6 +50,7 @@ body {
     user-select: none;
     display: flex;
     justify-content: right;
+    flex-wrap: wrap;
     padding: 6px;
     position: absolute;
     bottom: 0;
@@ -58,20 +58,19 @@ body {
 }
 
 .card a {
-    width: auto;
-    height: 30px;
     margin: 10px
 }
 
 .card img {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: 30px;
     transition-property: transform;
     transition-duration: 200ms;
     border-radius: 30px;
     border-style: solid;
     border-width: 1px;
     border-color: var(--border-color);
+    background-color: var(--nav-background);
 }
 
 .card img:hover {
@@ -90,16 +89,17 @@ body {
     z-index: 1000;
     top: 0;
     width: 100%;
-    height: 9%;
     background-color: var(--nav-background);
     /* background-color: rgba(152, 152, 152, 0.221); */
     backdrop-filter: blur(5px);
+    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 nav {
     width: 320px;
     display: table;
-    margin: auto;
+    margin: 0 auto 10px auto;
     padding-top: 10px;
     
     /* Removing this breaks the indicator so idk */
@@ -138,7 +138,7 @@ nav a:after {
     top: 5px;
     left: 18px;
     width: 4px;
-    height: 4px
+    height: 4px;
 }
 
 nav a:nth-child(1):before {
@@ -199,10 +199,27 @@ nav a:nth-child(3):hover ~ #indicator {
     background: linear-gradient(130deg, purple, palevioletred);
 }
 
+footer {    
+    background: var(--footer);
+    color: var(--darker-text);
+    /* -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 10px */
+}
+
+
+footer p {
+    text-align: center;
+    padding: 9px;
+}
+
+/* CSS adjustments for mobile */
+
 @media only screen and (max-width: 768px) {
     .cards {
         grid-template-columns: 80vw;
         justify-content: center;
-
     }
 }
