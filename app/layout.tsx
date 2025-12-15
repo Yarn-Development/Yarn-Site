@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic' // <--- 1. Import dynamic
 import { Playfair_Display, JetBrains_Mono } from 'next/font/google'
@@ -8,12 +9,12 @@ import { Toaster } from "@/components/ui/toaster"
 // { ssr: false } prevents the server from trying to render WebGL/Window logic
 const LoomBackground = dynamic(
   () => import('@/components/canvas/LoomBackground').then((mod) => mod.LoomBackground),
-  { ssr: false }
+  { ssr: !!false }
 )
 
 const WovenScroll = dynamic(
   () => import('@/components/ui/woven-scroll').then((mod) => mod.WovenScroll),
-  { ssr: false }
+  { ssr: !!false }
 )
 
 const serif = Playfair_Display({ 
