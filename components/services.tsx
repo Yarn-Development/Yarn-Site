@@ -1,84 +1,93 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Brain, Code2, Lightbulb, GraduationCap, Users, Rocket } from "lucide-react"
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Brain, Code2, Lightbulb, GraduationCap, Users, Rocket, ArrowUpRight } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 const services = [
   {
-    icon: Lightbulb,
-    title: "Product Ideation & Prototyping",
-    description: "Collaborating with clients and teams to turn raw ideas into validated MVPs with clear user value.",
-    features: ["User Research", "MVP Development", "Market Validation", "Prototype Testing"],
-  },
-  {
     icon: Code2,
-    title: "Full-Stack Development",
-    description:
-      "Building scalable, secure, and modern applications using React, Node.js, Supabase, and cutting-edge technologies.",
-    features: ["React & Next.js", "Node.js Backend", "Database Design", "API Development"],
+    title: "Full-Stack Engineering",
+    description: "Next.js, Supabase, and Vercel architecture. We build scalable, type-safe applications that perform.",
+    tags: ["React", "PostgreSQL", "TypeScript"],
+    colSpan: "md:col-span-2", // Bento: Wide Item
   },
   {
     icon: Brain,
-    title: "AI Integrations",
-    description:
-      "Leveraging GPT models, OCR, and data science tools to build smart and responsive features that enhance user experience.",
-    features: ["LLM Integration", "OCR Solutions", "Data Analytics", "Smart Automation"],
+    title: "AI Integration",
+    description: "LLM implementation & RAG pipelines.",
+    tags: ["OpenAI", "Vector DBs"],
+    colSpan: "md:col-span-1", // Bento: Small Item
   },
   {
     icon: GraduationCap,
-    title: "Educational Technology",
-    description:
-      "Designing digital platforms that enhance teaching and learning through interactive assessments and AI-generated content.",
-    features: ["Learning Platforms", "Assessment Tools", "Content Generation", "Progress Tracking"],
+    title: "EdTech Platforms",
+    description: "Specialized learning environments with real-time assessment tools.",
+    tags: ["LMS", "Real-time"],
+    colSpan: "md:col-span-1",
   },
   {
-    icon: Users,
-    title: "Client & Commission Work",
-    description:
-      "Delivering tailored software projects with structured payment plans, maintenance phases, and clear timelines.",
-    features: ["Custom Solutions", "Project Management", "Ongoing Support", "Clear Deliverables"],
-  },
-  {
-    icon: Rocket,
-    title: "Startup Solutions",
-    description:
-      "Specialized services for startups including rapid prototyping, technical consulting, and scalable architecture design.",
-    features: ["Rapid Prototyping", "Technical Consulting", "Scalable Architecture", "Growth Planning"],
+    icon: Lightbulb,
+    title: "Product Strategy",
+    description: "From napkin sketch to validated MVP. We bridge the gap between creative spark and technical execution.",
+    tags: ["Prototyping", "Discovery"],
+    colSpan: "md:col-span-2",
   },
 ]
 
 export function Services() {
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="py-32 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">What We Do</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            From ideation to deployment, we provide comprehensive technology solutions that drive innovation and solve
-            complex challenges.
+        
+        {/* Section Header */}
+        <div className="mb-16 border-l-2 border-fuchsia-500 pl-6">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
+            Our Expertise
+          </h2>
+          <p className="text-xl text-gray-400 font-mono max-w-2xl">
+            Technical rigour meets creative fluidity.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {services.map((service, index) => (
             <Card
               key={index}
-              className="border-0 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-white to-gray-50"
+              className={cn(
+                "group relative overflow-hidden border-white/10 bg-black/40 backdrop-blur-md hover:border-fuchsia-500/50 transition-colors duration-500",
+                service.colSpan
+              )}
             >
-              <CardHeader>
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                  <service.icon className="w-6 h-6 text-white" />
+              {/* Hover Gradient Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              <CardHeader className="relative z-10">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-fuchsia-500/50 transition-colors">
+                    <service.icon className="w-5 h-5 text-gray-300 group-hover:text-fuchsia-400" />
+                  </div>
+                  <ArrowUpRight className="w-5 h-5 text-gray-600 group-hover:text-fuchsia-500 transition-colors" />
                 </div>
-                <CardTitle className="text-xl font-bold text-gray-900">{service.title}</CardTitle>
-                <CardDescription className="text-gray-600">{service.description}</CardDescription>
+                <CardTitle className="text-2xl font-serif text-white group-hover:text-fuchsia-50 transition-colors">
+                  {service.title}
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <ul className="space-y-2">
-                  {service.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center text-sm text-gray-600">
-                      <div className="w-1.5 h-1.5 bg-purple-600 rounded-full mr-3"></div>
-                      {feature}
-                    </li>
+              
+              <CardContent className="relative z-10 space-y-4">
+                <p className="text-gray-400 leading-relaxed">
+                  {service.description}
+                </p>
+                
+                {/* Tech Tags */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {service.tags.map((tag, i) => (
+                    <span key={i} className="text-xs font-mono text-cyan-400 bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">
+                      {`// ${tag}`}
+                    </span>
                   ))}
-                </ul>
+                </div>
               </CardContent>
             </Card>
           ))}

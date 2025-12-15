@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, MessageSquare, Calendar, ArrowRight, CheckCircle, AlertCircle } from "lucide-react"
+import { ArrowRight, CheckCircle, AlertCircle } from "lucide-react"
+
 
 interface FormData {
   name: string
@@ -25,7 +25,6 @@ export function Contact() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -70,7 +69,7 @@ export function Contact() {
   }
 
   const handleEmailClick = () => {
-    window.location.href = 'mailto:hello@yarndev.co.uk?subject=Project Inquiry'
+    window.location.href = 'mailto:admin@yarndev.co.uk?subject=Project Inquiry'
   }
 
   const handleScheduleCall = () => {
@@ -79,152 +78,63 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section id="contact" className="py-32 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto">
+          
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Let's Build Something Amazing</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Ready to turn your innovative idea into a practical digital solution? Let's discuss your project and
-              explore how we can help.
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+              Initialize Connection
+            </h2>
+            <p className="text-gray-400 font-mono">
+              Ready to weave your idea into code?
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Contact Options */}
-            <div className="space-y-6">
-              <Card className="border-0 shadow-lg">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                    <Mail className="w-6 h-6 text-white" />
+          <div className="bg-black/40 border border-white/10 rounded-xl p-8 backdrop-blur-md shadow-2xl">
+            {submitStatus === 'success' ? (
+              <div className="text-center py-12">
+                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                <h3 className="text-2xl text-white font-serif mb-2">Message Received</h3>
+                <p className="text-gray-400 font-mono">We will return the signal shortly.</p>
+              </div>
+            ) : (
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono text-cyan-500 uppercase tracking-widest">Name</label>
+                    <Input className="bg-white/5 border-white/10 text-white font-mono focus:border-cyan-500/50 focus:ring-cyan-500/20" placeholder="John Doe" />
                   </div>
-                  <CardTitle className="text-lg">Email Us</CardTitle>
-                  <CardDescription>Get in touch for project inquiries</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" className="w-full" onClick={handleEmailClick}>
-                    hello@yarndev.co.uk
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center mb-4">
-                    <Calendar className="w-6 h-6 text-white" />
+                  <div className="space-y-2">
+                    <label className="text-xs font-mono text-cyan-500 uppercase tracking-widest">Email</label>
+                    <Input className="bg-white/5 border-white/10 text-white font-mono focus:border-cyan-500/50 focus:ring-cyan-500/20" placeholder="john@example.com" />
                   </div>
-                  <CardTitle className="text-lg">Schedule a Call</CardTitle>
-                  <CardDescription>Book a free consultation</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" className="w-full" onClick={handleScheduleCall}>
-                    Book Meeting
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+                </div>
 
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
-              <Card className="border-0 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl">Start Your Project</CardTitle>
-                  <CardDescription>Tell us about your idea and we'll get back to you within 24 hours.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {submitStatus === 'success' && (
-                    <div className="flex items-center gap-2 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800">
-                      <CheckCircle className="w-5 h-5" />
-                      <span>Thank you! We'll get back to you within 24 hours.</span>
-                    </div>
-                  )}
-                  
-                  {submitStatus === 'error' && (
-                    <div className="flex items-center gap-2 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
-                      <AlertCircle className="w-5 h-5" />
-                      <span>Something went wrong. Please try again or email us directly.</span>
-                    </div>
-                  )}
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-cyan-500 uppercase tracking-widest">Project Type</label>
+                  <select className="w-full h-10 rounded-md bg-white/5 border border-white/10 text-white font-mono px-3 focus:outline-none focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20">
+                    <option className="bg-black">Full-Stack Development</option>
+                    <option className="bg-black">AI Integration</option>
+                    <option className="bg-black">EdTech Platform</option>
+                  </select>
+                </div>
 
-                  <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                      <div>
-                        <label className="text-sm font-medium text-gray-700 mb-2 block">Name</label>
-                        <Input 
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          placeholder="Your name" 
-                          required 
-                        />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium text-gray-700 mb-2 block">Email</label>
-                        <Input 
-                          type="email" 
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          placeholder="your@email.com" 
-                          required 
-                        />
-                      </div>
-                    </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-cyan-500 uppercase tracking-widest">Brief</label>
+                  <Textarea 
+                    className="bg-white/5 border-white/10 text-white font-mono min-h-[150px] focus:border-cyan-500/50 focus:ring-cyan-500/20" 
+                    placeholder="Describe your requirements..." 
+                  />
+                </div>
 
-                    <div className="mb-6">
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">Company</label>
-                      <Input 
-                        name="company"
-                        value={formData.company}
-                        onChange={handleInputChange}
-                        placeholder="Your company (optional)" 
-                      />
-                    </div>
-
-                    <div className="mb-6">
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">Project Type</label>
-                      <select 
-                        name="projectType"
-                        value={formData.projectType}
-                        onChange={handleInputChange}
-                        className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                      >
-                        <option>Full-Stack Development</option>
-                        <option>AI Integration</option>
-                        <option>Educational Technology</option>
-                        <option>MVP Development</option>
-                        <option>Sales Enablement Tools</option>
-                        <option>OCR/Document Processing</option>
-                        <option>Consulting</option>
-                        <option>Other</option>
-                      </select>
-                    </div>
-
-                    <div className="mb-6">
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">Project Description</label>
-                      <Textarea
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                        placeholder="Tell us about your project, goals, and timeline..."
-                        className="min-h-[120px]"
-                        required
-                      />
-                    </div>
-
-                    <Button 
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-lg py-3"
-                    >
-                      {isSubmitting ? 'Sending...' : 'Send Project Details'}
-                      <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
+                <Button className="w-full bg-gradient-to-r from-cyan-600 to-fuchsia-600 hover:from-cyan-500 hover:to-fuchsia-500 text-white font-mono uppercase tracking-widest h-12">
+                  Transmit Data <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </form>
+            )}
           </div>
+
         </div>
       </div>
     </section>

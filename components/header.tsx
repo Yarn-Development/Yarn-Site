@@ -1,134 +1,113 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Terminal } from "lucide-react"
+import Image from "next/image"
+import { cn } from "@/lib/utils"
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Detect scroll to add background only when moving
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
+      element.scrollIntoView({ behavior: 'smooth' })
     }
-    setIsMenuOpen(false) // Close mobile menu after clicking
+    setIsMenuOpen(false)
   }
 
+  const navLinks = [
+    { name: "Services", id: "services" },
+    { name: "About", id: "about" },
+    { name: "Work", id: "projects" },
+  ]
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <header 
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
+        isScrolled ? "bg-black/50 backdrop-blur-md border-white/10 py-3" : "bg-transparent py-5"
+      )}
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center space-x-2 cursor-pointer" onClick={() => scrollToSection('hero')}>
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
-              <img
-              src="/yarntp.png"
-              alt="Yarn Logo"
-              className="w-10 h-10 object-contain"
-              style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.08))" }}
+        <div className="flex items-center justify-between">
+          
+          {/* Logo Area */}
+          <div 
+            className="flex items-center space-x-2 cursor-pointer group" 
+            onClick={() => scrollToSection('hero')}
+          >
+            <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center group-hover:border-cyan-500/50 transition-colors">
+              { /* Yarn Logo Image */}
+              <Image 
+                src="/yarntp.svg" 
+                alt="Yarn Development Logo" 
+                width={48} 
+                height={48} 
+                className="object-contain"
               />
             </div>
-            <span className="text-xl font-bold text-gray-900">Yarn Development</span>
+            <div className="flex flex-col">
+              <span className="text-lg font-serif font-bold text-white tracking-wide">Yarn Dev</span>
+              <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Studio</span>
+            </div>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-8">
-            <button 
-              onClick={() => scrollToSection('services')} 
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Services
-            </button>
-            <button 
-              onClick={() => scrollToSection('about')} 
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              About
-            </button>
-            <button 
-              onClick={() => scrollToSection('projects')} 
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Projects
-            </button>
-            <button 
-              onClick={() => scrollToSection('contact')} 
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Contact
-            </button>
-          </nav>
-
-          <div className="hidden md:flex items-center space-x-4">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => scrollToSection('services')}
-            >
-              Get Started
-            </Button>
+            {navLinks.map((link) => (
+              <button 
+                key={link.name}
+                onClick={() => scrollToSection(link.id)} 
+                className="text-sm font-mono text-gray-400 hover:text-cyan-400 transition-colors uppercase tracking-wider"
+              >
+                {link.name}
+              </button>
+            ))}
+            
             <Button
               size="sm"
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+              variant="outline"
+              className="border-fuchsia-500/50 text-fuchsia-400 hover:bg-fuchsia-950/30 hover:text-fuchsia-300 font-mono text-xs uppercase"
               onClick={() => scrollToSection('contact')}
             >
-              Let's Talk
+              Start Project
             </Button>
-          </div>
+          </nav>
 
-          {/* Mobile Menu Button */}
-          <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {/* Mobile Menu Toggle */}
+          <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Nav */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 border-b border-white/10 backdrop-blur-xl p-4">
             <nav className="flex flex-col space-y-4">
-              <button 
-                onClick={() => scrollToSection('services')} 
-                className="text-gray-600 hover:text-gray-900 transition-colors text-left"
-              >
-                Services
-              </button>
-              <button 
-                onClick={() => scrollToSection('about')} 
-                className="text-gray-600 hover:text-gray-900 transition-colors text-left"
-              >
-                About
-              </button>
-              <button 
-                onClick={() => scrollToSection('projects')} 
-                className="text-gray-600 hover:text-gray-900 transition-colors text-left"
-              >
-                Projects
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')} 
-                className="text-gray-600 hover:text-gray-900 transition-colors text-left"
-              >
-                Contact
-              </button>
-              <div className="flex flex-col space-y-2 pt-4">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => scrollToSection('services')}
+              {navLinks.map((link) => (
+                <button 
+                  key={link.name}
+                  onClick={() => scrollToSection(link.id)} 
+                  className="text-left text-gray-300 hover:text-cyan-400 py-2 font-mono"
                 >
-                  Get Started
-                </Button>
-                <Button 
-                  size="sm" 
-                  className="bg-gradient-to-r from-purple-600 to-blue-600"
-                  onClick={() => scrollToSection('contact')}
-                >
-                  Let's Talk
-                </Button>
-              </div>
+                  {link.name}
+                </button>
+              ))}
+              <Button onClick={() => scrollToSection('contact')} className="w-full bg-fuchsia-600 hover:bg-fuchsia-700">
+                Let's Talk
+              </Button>
             </nav>
           </div>
         )}

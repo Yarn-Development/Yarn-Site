@@ -11,8 +11,8 @@ const config: Config = {
   theme: {
   	extend: {
   		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+			background: 'hsl(240 10% 3.9%)', 
+			foreground: 'hsl(0 0% 98%)',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
@@ -41,6 +41,12 @@ const config: Config = {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
+			yarn: {
+				cyan: '#00f2ff',   // For links/active states
+				pink: '#ff00d4',   // For "Idea" threads
+				purple: '#bd00ff', // For "Code" threads
+				neon: '#ccff00',   // For accents/CTAs
+			},
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
@@ -62,6 +68,10 @@ const config: Config = {
   				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
+		fontFamily: {
+			serif: ['var(--font-serif)'],
+			mono: ['var(--font-mono)'],
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

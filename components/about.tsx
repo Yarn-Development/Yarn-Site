@@ -1,72 +1,66 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { Users, Globe, Zap, Target } from "lucide-react"
+import { Users, Zap, Target, Cpu } from "lucide-react"
 
 const values = [
   {
     icon: Users,
-    title: "Collaborative & Remote-first",
-    description:
-      "Our team works collaboratively using modern dev tools and async workflows, delivering across different time zones and university schedules.",
+    title: "Remote Collective",
+    description: "Async workflows delivering across time zones.",
   },
   {
     icon: Target,
-    title: "Agile & Outcome-Oriented",
-    description:
-      "We prioritize iterative development, regular client check-ins, and clear deliverables to ensure projects meet goals on time and within scope.",
+    title: "Outcome Oriented",
+    description: "We don't just write code; we ship products.",
   },
   {
     icon: Zap,
-    title: "Design-led Development",
-    description:
-      "We believe great user experience starts with thoughtful design—our builds often start with Figma prototypes and user-centric feedback loops.",
+    title: "Design Led",
+    description: "Engineering that respects the pixel.",
   },
   {
-    icon: Globe,
-    title: "Innovation-Focused",
-    description:
-      "We stay at the forefront of technology trends, constantly exploring new tools and methodologies to deliver cutting-edge solutions.",
+    icon: Cpu,
+    title: "Modern Stack",
+    description: "Bleeding edge tech, stable execution.",
   },
 ]
 
 export function About() {
   return (
-    <section id="about" className="py-20 bg-gradient-to-br from-gray-50 to-white">
+    <section id="about" className="py-32 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">About Yarn Development</h2>
-            <p className="text-xl text-gray-600 leading-relaxed">
-              We're a creative technology studio founded by university students with a passion for turning innovative
-              ideas into practical, impactful digital products. Our core philosophy is to weave technology into stories
-              that solve real-world problems.
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Text Content */}
+          <div>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+              Who We Are
+            </h2>
+            <div className="space-y-6 text-gray-400 font-mono text-sm md:text-base leading-relaxed">
+              <p>
+                Yarn Development is a creative technology studio founded on a simple premise: 
+                <span className="text-cyan-400"> great software is woven, not just written.</span>
+              </p>
+              <p>
+                We bridge the gap between "University Innovation" and "Enterprise Reliability." 
+                Our team specializes in taking raw, unstructured ideas and spinning them into 
+                functional, scalable applications using Next.js, AI, and Cloud Architecture.
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          {/* Grid of Values */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {values.map((value, index) => (
-              <Card key={index} className="border-0 shadow-lg bg-white">
+              <Card key={index} className="bg-white/5 border-white/10 hover:border-cyan-500/30 transition-colors backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <value.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{value.title}</h3>
-                      <p className="text-gray-600">{value.description}</p>
-                    </div>
-                  </div>
+                  <value.icon className="w-8 h-8 text-fuchsia-500 mb-4" />
+                  <h3 className="text-lg font-bold text-white mb-2 font-serif">{value.title}</h3>
+                  <p className="text-sm text-gray-500 font-mono">{value.description}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-8 text-white text-center">
-            <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
-            <p className="text-lg opacity-90 max-w-2xl mx-auto">
-              To bridge the gap between innovative ideas and practical solutions, creating digital products that not
-              only meet technical requirements but also tell compelling stories and solve meaningful problems.
-            </p>
-          </div>
         </div>
       </div>
     </section>
