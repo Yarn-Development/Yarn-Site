@@ -10,10 +10,7 @@ import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 export default function HomePage() {
   const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  })
+
   return (
  <div ref={containerRef} className="relative min-h-screen selection:bg-yarn-pink selection:text-white">
       

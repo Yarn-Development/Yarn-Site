@@ -1,21 +1,8 @@
-
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic' // <--- 1. Import dynamic
 import { Playfair_Display, JetBrains_Mono } from 'next/font/google'
-import './globals.css'
+import './globals.css' // We will fix this connection in Step 3
 import { Toaster } from "@/components/ui/toaster"
-
-// 2. Dynamically import the heavy visual components
-// { ssr: false } prevents the server from trying to render WebGL/Window logic
-const LoomBackground = dynamic(
-  () => import('@/components/canvas/LoomBackground').then((mod) => mod.LoomBackground),
-  { ssr: !!false }
-)
-
-const WovenScroll = dynamic(
-  () => import('@/components/ui/woven-scroll').then((mod) => mod.WovenScroll),
-  { ssr: !!false }
-)
+import { VisualEffects } from "@/components/layout/VisualEffects"
 
 const serif = Playfair_Display({ 
   subsets: ['latin'],
@@ -30,8 +17,33 @@ const mono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Yarn Development | Digital Product Studio',
-  description: 'Weaving innovative ideas into scalable code.',
+  title: 'Yarn Development',
+  keywords: ['Yarn', 'Development', 'Web Development', 'Software Engineering'],
+  authors: [{ name: 'Yarn Development Team', url: 'https://yarndev.co.uk' }],
+  openGraph: {
+    title: 'Yarn Development',
+    description: 'Yarn Development - Building the Future of Web Applications',
+    url: 'https://yarndev.co.uk',
+    siteName: 'Yarn Development',
+    images: [
+      {
+        url: 'https://yarndev.co.uk/yarntp.png',
+        width: 1200,
+        height: 630,
+        alt: 'Yarn Development Logo Image',
+      },
+    ],
+    locale: 'en_GB',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Yarn Development',
+    description: 'Yarn Development - Building the Future of Web Applications',
+    site: '@yarndev',
+    creator: '@aspekts',
+    images: ['https://yarndev.co.uk/yarntp.png'],
+  }
 }
 
 export default function RootLayout({
@@ -41,14 +53,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`dark ${serif.variable} ${mono.variable}`}>
-      <body className="font-mono antialiased bg-black text-white min-h-screen selection:bg-fuchsia-500 selection:text-white">
+      <body 
+        className="font-mono antialiased"
+        // CRITICAL: These inline styles fix the white screen issues
+        style={{ 
+          backgroundColor: '#050505', 
+          color: '#ffffff',
+          minHeight: '100vh',
+          margin: 0
+        }}
+      >
         
-        {/* 3. Render the dynamic components */}
-        <LoomBackground />
-        <WovenScroll />
+        {/* Visual Effects Layer (Self-contained) */}
+        <VisualEffects />
         
-        {/* Ensure z-index is explicitly higher than the background */}
-        <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Content Layer */}
+        {/* position: relative ensures this sits ON TOP of the fixed background */}
+        <div 
+          style={{ position: 'relative', zIndex: 10 }}
+          className="flex flex-col min-h-screen"
+        >
           {children}
         </div>
         
