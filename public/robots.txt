@@ -1,0 +1,29 @@
+# Robots.txt for Yarn Development
+# https://yarndev.co.uk
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://yarndev.co.uk/sitemap.xml
+
+# Crawl delay for politeness
+Crawl-delay: 1
+
+# Block common bots that aren't useful
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /

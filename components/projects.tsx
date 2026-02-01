@@ -59,7 +59,7 @@ export function Projects() {
   const ventureLabProjects = projects.filter(p => !p.featured)
 
   return (
-    <section id="projects" className="py-24 md:py-32 bg-yarn-base">
+    <section id="projects" className="py-24 md:py-32 bg-yarn-base" aria-labelledby="projects-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -75,7 +75,7 @@ export function Projects() {
             <span className="text-xs font-mono text-zinc-600 uppercase">Case Studies</span>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-sans font-bold text-white mb-4 text-balance">
+          <h2 id="projects-heading" className="text-3xl md:text-4xl font-sans font-bold text-white mb-4 text-balance">
             Selected <em className="font-serif text-zinc-400">Work</em>
           </h2>
           
