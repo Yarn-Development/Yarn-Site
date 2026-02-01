@@ -3,7 +3,6 @@ import type { Config } from "tailwindcss";
 const config: Config = {
     darkMode: ["class"],
     content: [
-    // This array ensures Tailwind scans ALL your folders
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,19 +12,18 @@ const config: Config = {
   theme: {
     extend: {
         colors: {
-            // UPDATED: Use CSS variables so they react to the 'dark' class
+            // Yarn Design System - #030303 Palette
+            yarn: {
+                base: '#030303',      // Primary background
+                surface: '#080808',   // Card/surface background
+                elevated: '#0a0a0a',  // Elevated surfaces
+                accent: '#18181b',    // Accent surfaces (zinc-900)
+            },
+            
+            // CSS variable-based colors for theming
             background: 'hsl(var(--background))', 
             foreground: 'hsl(var(--foreground))',
             
-            // Your custom Yarn brand colors
-            yarn: {
-                cyan: '#00f2ff',   
-                pink: '#ff00d4',   
-                purple: '#bd00ff', 
-                neon: '#ccff00',   
-            },
-            
-            // Standard Shadcn mappings
             card: {
                 DEFAULT: 'hsl(var(--card))',
                 foreground: 'hsl(var(--card-foreground))'
@@ -76,8 +74,14 @@ const config: Config = {
             }
         },
         fontFamily: {
-            serif: ['var(--font-serif)', 'serif'],
-            mono: ['var(--font-mono)', 'monospace'],
+            // Geist Sans for headings
+            sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+            // Editorial New for serif accents
+            serif: ['var(--font-editorial)', 'Georgia', 'serif'],
+            // Inter for body text
+            body: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+            // Geist Mono for technical/code
+            mono: ['var(--font-geist-mono)', 'monospace'],
         },
         borderRadius: {
             lg: 'var(--radius)',
