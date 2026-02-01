@@ -1,4 +1,23 @@
+import { Metadata } from "next"
 import { LegalLayout } from "@/components/legal-layout"
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'Yarn Development Terms of Service. Understand the terms and conditions for using our software development services.',
+  alternates: {
+    canonical: '/terms',
+  },
+  openGraph: {
+    title: 'Terms of Service | Yarn Development',
+    description: 'Terms and conditions for Yarn Development software development services.',
+    url: 'https://yarndev.co.uk/terms',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+}
 
 export default function TermsOfService() {
   return (

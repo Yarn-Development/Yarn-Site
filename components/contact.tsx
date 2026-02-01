@@ -70,13 +70,13 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-32 relative">
+    <section id="contact" className="py-32 relative" aria-labelledby="contact-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-sans font-bold text-zinc-100 mb-6 text-balance">
+            <h2 id="contact-heading" className="text-4xl md:text-5xl font-sans font-bold text-zinc-100 mb-6 text-balance">
               Initialize <em className="font-serif not-italic text-zinc-400">Connection</em>
             </h2>
             <p className="text-zinc-500 font-mono text-sm text-pretty">

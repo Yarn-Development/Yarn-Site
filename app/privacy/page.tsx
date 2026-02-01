@@ -1,4 +1,23 @@
+import { Metadata } from "next"
 import { LegalLayout } from "@/components/legal-layout"
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'Yarn Development Privacy Policy. Learn how we collect, use, and protect your personal information when using our services.',
+  alternates: {
+    canonical: '/privacy',
+  },
+  openGraph: {
+    title: 'Privacy Policy | Yarn Development',
+    description: 'Learn how Yarn Development collects, uses, and protects your personal information.',
+    url: 'https://yarndev.co.uk/privacy',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+}
 
 export default function PrivacyPolicy() {
   return (

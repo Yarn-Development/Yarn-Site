@@ -18,7 +18,7 @@ export default function HomePage() {
       {/* Main content */}
       <Header />
       
-      <main>
+      <main id="main-content" role="main">
         <Hero />
         <Services />
         <About />

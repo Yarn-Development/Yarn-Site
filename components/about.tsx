@@ -29,7 +29,7 @@ const values = [
 
 export function About() {
   return (
-    <section id="about" className="py-24 md:py-32 bg-yarn-surface">
+    <section id="about" className="py-24 md:py-32 bg-yarn-surface" aria-labelledby="about-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           
@@ -45,7 +45,7 @@ export function About() {
               <span className="text-xs font-mono text-zinc-600 uppercase">About Us</span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl font-sans font-bold text-white mb-6 text-balance">
+            <h2 id="about-heading" className="text-3xl md:text-4xl font-sans font-bold text-white mb-6 text-balance">
               Who <em className="font-serif text-zinc-400">We</em> Are
             </h2>
             

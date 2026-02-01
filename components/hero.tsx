@@ -64,8 +64,10 @@ export function Hero() {
 
   return (
     <section 
+      id="hero"
       ref={containerRef}
       className="relative min-h-dvh flex items-center justify-center overflow-hidden bg-yarn-base"
+      aria-label="Welcome to Yarn Development"
     >
       {/* Yarn Sphere Background */}
       <YarnSphere />

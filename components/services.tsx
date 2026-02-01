@@ -38,7 +38,7 @@ const services = [
 
 export function Services() {
   return (
-    <section id="services" className="py-24 md:py-32 bg-yarn-base">
+    <section id="services" className="py-24 md:py-32 bg-yarn-base" aria-labelledby="services-heading">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -54,7 +54,7 @@ export function Services() {
             <span className="text-xs font-mono text-zinc-600 uppercase">Capabilities</span>
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-sans font-bold text-white mb-4 text-balance">
+          <h2 id="services-heading" className="text-3xl md:text-4xl font-sans font-bold text-white mb-4 text-balance">
             Technical <em className="font-serif text-zinc-400">Expertise</em>
           </h2>
           

@@ -1,0 +1,28 @@
+{
+  "name": "Yarn Development",
+  "short_name": "Yarn Dev",
+  "description": "Software is woven, not just written. A UK-based creative technology studio specializing in full-stack development, AI integration, and EdTech platforms.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030303",
+  "theme_color": "#030303",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/yarntp.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/yarntp.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "en-GB",
+  "dir": "ltr",
+  "prefer_related_applications": false
+}
