@@ -1,95 +1,111 @@
 "use client"
 
+import { motion } from "motion/react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Brain, Code2, Lightbulb, GraduationCap, Users, Rocket, ArrowUpRight } from "lucide-react"
+import { Brain, Code2, Lightbulb, GraduationCap, ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const services = [
   {
     icon: Code2,
     title: "Full-Stack Engineering",
-    description: "Next.js, Supabase, and Vercel architecture. We build scalable, type-safe applications that perform.",
+    description: "Next.js, Supabase, and Vercel architecture. We build scalable, type-safe applications with modern tooling.",
     tags: ["React", "PostgreSQL", "TypeScript"],
-    colSpan: "md:col-span-2", // Bento: Wide Item
+    colSpan: "lg:col-span-2",
   },
   {
     icon: Brain,
     title: "AI Integration",
-    description: "LLM implementation & RAG pipelines.",
+    description: "LLM implementation & RAG pipelines for intelligent applications.",
     tags: ["OpenAI", "Vector DBs"],
-    colSpan: "md:col-span-1", // Bento: Small Item
+    colSpan: "lg:col-span-1",
   },
   {
     icon: GraduationCap,
     title: "EdTech Platforms",
     description: "Specialized learning environments with real-time assessment tools.",
     tags: ["LMS", "Real-time"],
-    colSpan: "md:col-span-1",
+    colSpan: "lg:col-span-1",
   },
   {
     icon: Lightbulb,
     title: "Product Strategy",
-    description: "From napkin sketch to validated MVP. We bridge the gap between creative spark and technical execution.",
+    description: "From napkin sketch to validated MVP. We bridge creative spark and technical execution.",
     tags: ["Prototyping", "Discovery"],
-    colSpan: "md:col-span-2",
+    colSpan: "lg:col-span-2",
   },
 ]
 
 export function Services() {
   return (
-    <section id="services" className="py-32 relative">
+    <section id="services" className="py-24 md:py-32 bg-yarn-base">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="mb-16 border-l-2 border-fuchsia-500 pl-6">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-            Our Expertise
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-16"
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-[1px] bg-zinc-700" />
+            <span className="text-xs font-mono text-zinc-600 uppercase">Capabilities</span>
+          </div>
+          
+          <h2 className="text-3xl md:text-4xl font-sans font-bold text-white mb-4 text-balance">
+            Technical <em className="font-serif text-zinc-400">Expertise</em>
           </h2>
-          <p className="text-xl text-gray-400 font-mono max-w-2xl">
-            Technical rigour meets creative fluidity.
+          
+          <p className="text-zinc-500 max-w-xl text-pretty">
+            Rigorous engineering meets creative problem-solving. We specialize in 
+            complex systems that scale.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {services.map((service, index) => (
-            <Card
+            <motion.div
               key={index}
-              className={cn(
-                "group relative overflow-hidden border-white/10 bg-black/40 backdrop-blur-md hover:border-fuchsia-500/50 transition-colors duration-500",
-                service.colSpan
-              )}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className={service.colSpan}
             >
-              {/* Hover Gradient Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              <CardHeader className="relative z-10">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-fuchsia-500/50 transition-colors">
-                    <service.icon className="w-5 h-5 text-gray-300 group-hover:text-fuchsia-400" />
+              <Card className="group h-full border-zinc-800/50 bg-yarn-surface hover:border-zinc-700/80 transition-colors duration-150 rounded-sm">
+                <CardHeader className="pb-4">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="size-10 rounded-sm bg-yarn-base flex items-center justify-center border border-zinc-800/50 group-hover:border-zinc-700 transition-colors duration-150">
+                      <service.icon className="size-5 text-zinc-500 group-hover:text-zinc-300 transition-colors duration-150" />
+                    </div>
+                    <ArrowUpRight className="size-4 text-zinc-800 group-hover:text-zinc-500 transition-colors duration-150" />
                   </div>
-                  <ArrowUpRight className="w-5 h-5 text-gray-600 group-hover:text-fuchsia-500 transition-colors" />
-                </div>
-                <CardTitle className="text-2xl font-serif text-white group-hover:text-fuchsia-50 transition-colors">
-                  {service.title}
-                </CardTitle>
-              </CardHeader>
-              
-              <CardContent className="relative z-10 space-y-4">
-                <p className="text-gray-400 leading-relaxed">
-                  {service.description}
-                </p>
+                  <CardTitle className="text-lg font-sans font-semibold text-zinc-200 group-hover:text-white transition-colors duration-150 text-balance">
+                    {service.title}
+                  </CardTitle>
+                </CardHeader>
                 
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {service.tags.map((tag, i) => (
-                    <span key={i} className="text-xs font-mono text-cyan-400 bg-cyan-950/30 px-2 py-1 rounded border border-cyan-900/50">
-                      {`// ${tag}`}
-                    </span>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-zinc-500 leading-relaxed text-pretty">
+                    {service.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {service.tags.map((tag, i) => (
+                      <span 
+                        key={i} 
+                        className="text-[10px] font-mono text-zinc-600 px-2 py-0.5 rounded-sm bg-yarn-base border border-zinc-800/30"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </div>
       </div>

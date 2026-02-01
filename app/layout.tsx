@@ -1,28 +1,49 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, JetBrains_Mono } from 'next/font/google'
-import './globals.css' // We will fix this connection in Step 3
+import { Geist, Geist_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
+import { Inter } from 'next/font/google'
+import './globals.css'
 import { Toaster } from "@/components/ui/toaster"
-import { VisualEffects } from "@/components/layout/VisualEffects"
 
-const serif = Playfair_Display({ 
+// Geist Sans - Primary heading font
+const geistSans = Geist({ 
   subsets: ['latin'],
-  variable: '--font-serif',
+  variable: '--font-geist-sans',
   display: 'swap',
 })
 
-const mono = JetBrains_Mono({ 
+// Geist Mono - Technical/code font
+const geistMono = Geist_Mono({ 
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-geist-mono',
   display: 'swap',
+})
+
+// Inter - Body text font
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+// Editorial New - Serif accent font (fallback to system serif if not available)
+// Using Playfair Display as a fallback since Editorial New requires licensing
+import { Playfair_Display } from 'next/font/google'
+const editorial = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-editorial',
+  display: 'swap',
+  style: ['normal', 'italic'],
 })
 
 export const metadata: Metadata = {
-  title: 'Yarn Development',
-  keywords: ['Yarn', 'Development', 'Web Development', 'Software Engineering'],
+  title: 'Yarn Development | Creative Technology Studio',
+  description: 'Software is woven, not just written. A creative technology studio turning innovative concepts into scalable digital products.',
+  keywords: ['Yarn', 'Development', 'Web Development', 'Software Engineering', 'Creative Technology', 'Next.js', 'React'],
   authors: [{ name: 'Yarn Development Team', url: 'https://yarndev.co.uk' }],
   openGraph: {
-    title: 'Yarn Development',
-    description: 'Yarn Development - Building the Future of Web Applications',
+    title: 'Yarn Development | Creative Technology Studio',
+    description: 'Software is woven, not just written. A creative technology studio turning innovative concepts into scalable digital products.',
     url: 'https://yarndev.co.uk',
     siteName: 'Yarn Development',
     images: [
@@ -30,7 +51,7 @@ export const metadata: Metadata = {
         url: 'https://yarndev.co.uk/yarntp.png',
         width: 1200,
         height: 630,
-        alt: 'Yarn Development Logo Image',
+        alt: 'Yarn Development Logo',
       },
     ],
     locale: 'en_GB',
@@ -38,8 +59,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Yarn Development',
-    description: 'Yarn Development - Building the Future of Web Applications',
+    title: 'Yarn Development | Creative Technology Studio',
+    description: 'Software is woven, not just written.',
     site: '@yarndev',
     creator: '@aspekts',
     images: ['https://yarndev.co.uk/yarntp.png'],
@@ -52,27 +73,19 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`dark ${serif.variable} ${mono.variable}`}>
+    <html 
+      lang="en" 
+      className={`dark ${geistSans.variable} ${geistMono.variable} ${inter.variable} ${editorial.variable}`}
+    >
       <body 
-        className="font-mono antialiased"
-        // CRITICAL: These inline styles fix the white screen issues
+        className="font-body antialiased min-h-dvh"
         style={{ 
-          backgroundColor: '#050505', 
-          color: '#ffffff',
-          minHeight: '100vh',
-          margin: 0
+          backgroundColor: '#030303', 
+          color: '#fafafa',
         }}
       >
-        
-        {/* Visual Effects Layer (Self-contained) */}
-        <VisualEffects />
-        
         {/* Content Layer */}
-        {/* position: relative ensures this sits ON TOP of the fixed background */}
-        <div 
-          style={{ position: 'relative', zIndex: 10 }}
-          className="flex flex-col min-h-screen"
-        >
+        <div className="relative z-10 flex flex-col min-h-dvh">
           {children}
         </div>
         

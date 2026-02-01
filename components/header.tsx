@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Terminal } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
@@ -10,7 +10,6 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  // Detect scroll to add background only when moving
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
@@ -22,7 +21,7 @@ export function Header() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      element.scrollIntoView({ behavior: "smooth" })
     }
     setIsMenuOpen(false)
   }
@@ -36,41 +35,42 @@ export function Header() {
   return (
     <header 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent",
-        isScrolled ? "bg-black/50 backdrop-blur-md border-white/10 py-3" : "bg-transparent py-5"
+        "fixed top-0 left-0 right-0 z-50 transition-colors duration-150",
+        isScrolled 
+          ? "bg-yarn-base/90 border-b border-zinc-800/50 py-3" 
+          : "bg-transparent py-5"
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Logo Area */}
+          {/* Logo */}
           <div 
-            className="flex items-center space-x-2 cursor-pointer group" 
-            onClick={() => scrollToSection('hero')}
+            className="flex items-center gap-3 cursor-pointer group" 
+            onClick={() => scrollToSection("hero")}
           >
-            <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center group-hover:border-cyan-500/50 transition-colors">
-              { /* Yarn Logo Image */}
+            <div className="size-9 bg-yarn-surface border border-zinc-800/50 rounded-sm flex items-center justify-center group-hover:border-zinc-700 transition-colors duration-150">
               <Image 
                 src="/yarntp.svg" 
-                alt="Yarn Development Logo" 
-                width={48} 
-                height={48} 
+                alt="Yarn Development" 
+                width={24} 
+                height={24} 
                 className="object-contain"
               />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-serif font-bold text-white tracking-wide">Yarn Dev</span>
-              <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Studio</span>
+              <span className="text-sm font-sans font-semibold text-white">Yarn</span>
+              <span className="text-[10px] font-mono text-zinc-600 uppercase">Development</span>
             </div>
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <button 
                 key={link.name}
                 onClick={() => scrollToSection(link.id)} 
-                className="text-sm font-mono text-gray-400 hover:text-cyan-400 transition-colors uppercase tracking-wider"
+                className="text-sm font-sans text-zinc-500 hover:text-white transition-colors duration-150"
               >
                 {link.name}
               </button>
@@ -78,35 +78,41 @@ export function Header() {
             
             <Button
               size="sm"
-              variant="outline"
-              className="border-fuchsia-500/50 text-fuchsia-400 hover:bg-fuchsia-950/30 hover:text-fuchsia-300 font-mono text-xs uppercase"
-              onClick={() => scrollToSection('contact')}
+              className="bg-white text-zinc-900 hover:bg-zinc-200 font-sans text-xs rounded-sm h-8 px-4 transition-colors duration-150"
+              onClick={() => scrollToSection("contact")}
             >
-              Start Project
+              Get in Touch
             </Button>
           </nav>
 
           {/* Mobile Menu Toggle */}
-          <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X /> : <Menu />}
+          <button 
+            className="md:hidden text-zinc-400 hover:text-white transition-colors duration-150" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
         </div>
 
         {/* Mobile Nav */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 border-b border-white/10 backdrop-blur-xl p-4">
-            <nav className="flex flex-col space-y-4">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-yarn-base border-b border-zinc-800/50 p-4">
+            <nav className="flex flex-col gap-1">
               {navLinks.map((link) => (
                 <button 
                   key={link.name}
                   onClick={() => scrollToSection(link.id)} 
-                  className="text-left text-gray-300 hover:text-cyan-400 py-2 font-mono"
+                  className="text-left text-zinc-400 hover:text-white py-3 font-sans text-sm border-b border-zinc-800/30 last:border-0 transition-colors duration-150"
                 >
                   {link.name}
                 </button>
               ))}
-              <Button onClick={() => scrollToSection('contact')} className="w-full bg-fuchsia-600 hover:bg-fuchsia-700">
-                Let's Talk
+              <Button 
+                onClick={() => scrollToSection("contact")} 
+                className="w-full bg-white text-zinc-900 hover:bg-zinc-200 mt-4 rounded-sm transition-colors duration-150"
+              >
+                Get in Touch
               </Button>
             </nav>
           </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useScroll, useSpring, useTransform, useMotionValue } from "framer-motion"
+import { motion, useScroll, useSpring, useTransform, useReducedMotion } from "motion/react"
 import { useEffect, useState, useRef } from "react"
 
 export function WovenScroll() {
@@ -8,6 +8,7 @@ export function WovenScroll() {
   const [windowHeight, setWindowHeight] = useState(0)
   const [scrollY, setScrollY] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
+  const prefersReducedMotion = useReducedMotion()
 
   // Smooth out the scroll value with snappier response
   const smoothProgress = useSpring(scrollYProgress, {
@@ -18,12 +19,14 @@ export function WovenScroll() {
 
   // Track actual scroll position for dynamic weave animation
   useEffect(() => {
+    if (prefersReducedMotion) return
+    
     const handleScroll = () => {
       setScrollY(window.scrollY)
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [prefersReducedMotion])
 
   // Calculate height for the SVG
   useEffect(() => {
@@ -57,6 +60,19 @@ export function WovenScroll() {
   // Only render if we have height calculated
   if (windowHeight === 0) return null
 
+  // For reduced motion, show a simplified static version
+  if (prefersReducedMotion) {
+    return (
+      <div 
+        ref={containerRef}
+        className="fixed left-0 md:left-4 top-0 bottom-0 w-[60px] z-40 pointer-events-none hidden md:block"
+      >
+        <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-cyan-500/50" />
+        <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-fuchsia-500/50" />
+      </div>
+    )
+  }
+
   return (
     <>
       {/* Left Side Weave */}
@@ -64,8 +80,6 @@ export function WovenScroll() {
         ref={containerRef}
         className="fixed left-0 md:left-4 top-0 bottom-0 w-[60px] z-40 pointer-events-none hidden md:block"
       >
-        {/* Ambient glow background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-transparent blur-xl" />
         
         <svg 
           width="60" 
@@ -76,7 +90,7 @@ export function WovenScroll() {
           style={{ height: windowHeight }}
         >
           <defs>
-            {/* Enhanced cyan gradient with glow */}
+            {/* Enhanced cyan gradient */}
             <linearGradient id="glow-cyan" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#00f2ff" stopOpacity="0" />
               <stop offset="30%" stopColor="#00f2ff" stopOpacity="0.8" />
@@ -85,7 +99,7 @@ export function WovenScroll() {
               <stop offset="100%" stopColor="#00f2ff" stopOpacity="0" />
             </linearGradient>
             
-            {/* Enhanced pink gradient with glow */}
+            {/* Enhanced pink gradient */}
             <linearGradient id="glow-pink" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#d946ef" stopOpacity="0" />
               <stop offset="30%" stopColor="#d946ef" stopOpacity="0.8" />
@@ -93,63 +107,7 @@ export function WovenScroll() {
               <stop offset="70%" stopColor="#d946ef" stopOpacity="0.8" />
               <stop offset="100%" stopColor="#d946ef" stopOpacity="0" />
             </linearGradient>
-
-            {/* Glow filters for enhanced visibility */}
-            <filter id="cyan-glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feFlood floodColor="#00f2ff" floodOpacity="0.8" />
-              <feComposite in2="blur" operator="in" />
-              <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-
-            <filter id="pink-glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="2" result="blur" />
-              <feFlood floodColor="#d946ef" floodOpacity="0.8" />
-              <feComposite in2="blur" operator="in" />
-              <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-
-            {/* Animated glow pulse */}
-            <filter id="pulse-glow" x="-100%" y="-100%" width="300%" height="300%">
-              <feGaussianBlur stdDeviation="6" result="blur" />
-              <feFlood floodColor="#ffffff" floodOpacity="0.3" />
-              <feComposite in2="blur" operator="in" />
-              <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
           </defs>
-
-          {/* Background glow layer - cyan */}
-          <motion.path
-            d={generatePath(0, scrollY)}
-            fill="none"
-            stroke="#00f2ff"
-            strokeWidth="8"
-            strokeLinecap="round"
-            style={{ pathLength: smoothProgress }}
-            filter="url(#cyan-glow)"
-            opacity={0.4}
-          />
-
-          {/* Background glow layer - pink */}
-          <motion.path
-            d={generatePath(Math.PI, scrollY)}
-            fill="none"
-            stroke="#d946ef"
-            strokeWidth="8"
-            strokeLinecap="round"
-            style={{ pathLength: smoothProgress }}
-            filter="url(#pink-glow)"
-            opacity={0.4}
-          />
 
           {/* Thread 1: Cyan (The Warp) - main stroke */}
           <motion.path
@@ -159,7 +117,6 @@ export function WovenScroll() {
             strokeWidth="3"
             strokeLinecap="round"
             style={{ pathLength: smoothProgress }}
-            filter="url(#cyan-glow)"
           />
 
           {/* Thread 2: Pink (The Weft) - main stroke */}
@@ -170,7 +127,6 @@ export function WovenScroll() {
             strokeWidth="3"
             strokeLinecap="round"
             style={{ pathLength: smoothProgress }}
-            filter="url(#pink-glow)"
           />
 
           {/* Bright core lines */}
@@ -194,36 +150,6 @@ export function WovenScroll() {
             opacity={0.6}
           />
         </svg>
-      </div>
-
-   
-      {/* Floating particles along the weave path */}
-      <div className="fixed left-2 md:left-6 top-0 bottom-0 w-[20px] z-50 pointer-events-none hidden md:block">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full"
-            style={{
-              background: i % 2 === 0 
-                ? 'radial-gradient(circle, #00f2ff 0%, transparent 70%)' 
-                : 'radial-gradient(circle, #d946ef 0%, transparent 70%)',
-              boxShadow: i % 2 === 0 
-                ? '0 0 20px 5px rgba(0, 242, 255, 0.6)' 
-                : '0 0 20px 5px rgba(217, 70, 239, 0.6)',
-              top: `${(scrollY * 0.5 + i * 300) % windowHeight}px`,
-              left: `${12 + Math.sin((scrollY * 0.01) + i) * 8}px`,
-            }}
-            animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.6, 1, 0.6],
-            }}
-            transition={{
-              duration: 2 + i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
       </div>
     </>
   )

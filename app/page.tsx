@@ -1,4 +1,5 @@
 "use client"
+
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { Services } from "@/components/services"
@@ -6,32 +7,25 @@ import { About } from "@/components/about"
 import { Projects } from "@/components/projects"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
-export default function HomePage() {
-  const containerRef = useRef(null)
+import { Thread } from "@/components/layout/Thread"
 
+export default function HomePage() {
   return (
- <div ref={containerRef} className="relative min-h-screen selection:bg-yarn-pink selection:text-white">
+    <div className="relative min-h-dvh selection:bg-zinc-700 selection:text-white">
+      {/* Central vertical thread with scroll progress */}
+      <Thread className="hidden md:block" />
       
-      <section id="header">
+      {/* Main content */}
       <Header />
-      </section>
-      <section id="hero">
-      <Hero />
-      </section>
-      <section id="services">
+      
+      <main>
+        <Hero />
         <Services />
-      </section>
-      <section id="about">
         <About />
-      </section>
-      <section id="projects">
         <Projects />
-      </section>
-      <section id="contact">
         <Contact />
-      </section>
+      </main>
+      
       <Footer />
     </div>
   )

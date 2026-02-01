@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ArrowRight, CheckCircle, AlertCircle } from "lucide-react"
+import { ArrowRight, CheckCircle } from "lucide-react"
 
 
 interface FormData {
@@ -25,6 +25,7 @@ export function Contact() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -68,71 +69,116 @@ export function Contact() {
     }
   }
 
-  const handleEmailClick = () => {
-    window.location.href = 'mailto:admin@yarndev.co.uk?subject=Project Inquiry'
-  }
-
-  const handleScheduleCall = () => {
-    // Replace with your actual calendar booking URL (e.g., Calendly)
-    window.open('https://calendly.com/yarndev', '_blank')
-  }
-
   return (
     <section id="contact" className="py-32 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           
+          {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
-              Initialize Connection
+            <h2 className="text-4xl md:text-5xl font-sans font-bold text-zinc-100 mb-6 text-balance">
+              Initialize <em className="font-serif not-italic text-zinc-400">Connection</em>
             </h2>
-            <p className="text-gray-400 font-mono">
+            <p className="text-zinc-500 font-mono text-sm text-pretty">
               Ready to weave your idea into code?
             </p>
           </div>
 
-          <div className="bg-black/40 border border-white/10 rounded-xl p-8 backdrop-blur-md shadow-2xl">
+          {/* Form Container */}
+          <div className="bg-yarn-surface border border-zinc-800/50 rounded-sm p-8">
             {submitStatus === 'success' ? (
               <div className="text-center py-12">
-                <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                <h3 className="text-2xl text-white font-serif mb-2">Message Received</h3>
-                <p className="text-gray-400 font-mono">We will return the signal shortly.</p>
+                <CheckCircle className="size-16 text-zinc-400 mx-auto mb-4" />
+                <h3 className="text-2xl text-zinc-100 font-sans font-semibold mb-2 text-balance">
+                  Message Received
+                </h3>
+                <p className="text-zinc-500 font-mono text-sm text-pretty">
+                  We will return the signal shortly.
+                </p>
               </div>
             ) : (
-              <form className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-xs font-mono text-cyan-500 uppercase tracking-widest">Name</label>
-                    <Input className="bg-white/5 border-white/10 text-white font-mono focus:border-cyan-500/50 focus:ring-cyan-500/20" placeholder="John Doe" />
+                    <label className="text-xs font-mono text-zinc-500 uppercase">
+                      Name
+                    </label>
+                    <Input 
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="bg-yarn-base border-zinc-800/50 text-zinc-100 font-mono rounded-sm focus:border-zinc-600 focus:ring-zinc-700/30 placeholder:text-zinc-600" 
+                      placeholder="John Doe" 
+                    />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-mono text-cyan-500 uppercase tracking-widest">Email</label>
-                    <Input className="bg-white/5 border-white/10 text-white font-mono focus:border-cyan-500/50 focus:ring-cyan-500/20" placeholder="john@example.com" />
+                    <label className="text-xs font-mono text-zinc-500 uppercase">
+                      Email
+                    </label>
+                    <Input 
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="bg-yarn-base border-zinc-800/50 text-zinc-100 font-mono rounded-sm focus:border-zinc-600 focus:ring-zinc-700/30 placeholder:text-zinc-600" 
+                      placeholder="john@example.com" 
+                    />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-mono text-cyan-500 uppercase tracking-widest">Project Type</label>
-                  <select className="w-full h-10 rounded-md bg-white/5 border border-white/10 text-white font-mono px-3 focus:outline-none focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20">
-                    <option className="bg-black">Full-Stack Development</option>
-                    <option className="bg-black">AI Integration</option>
-                    <option className="bg-black">EdTech Platform</option>
+                  <label className="text-xs font-mono text-zinc-500 uppercase">
+                    Project Type
+                  </label>
+                  <select 
+                    name="projectType"
+                    value={formData.projectType}
+                    onChange={handleInputChange}
+                    className="w-full h-10 rounded-sm bg-yarn-base border border-zinc-800/50 text-zinc-100 font-mono px-3 focus:outline-none focus:border-zinc-600 focus:ring-2 focus:ring-zinc-700/30"
+                  >
+                    <option className="bg-yarn-base">Full-Stack Development</option>
+                    <option className="bg-yarn-base">AI Integration</option>
+                    <option className="bg-yarn-base">EdTech Platform</option>
+                    <option className="bg-yarn-base">Custom Software</option>
                   </select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-mono text-cyan-500 uppercase tracking-widest">Brief</label>
+                  <label className="text-xs font-mono text-zinc-500 uppercase">
+                    Brief
+                  </label>
                   <Textarea 
-                    className="bg-white/5 border-white/10 text-white font-mono min-h-[150px] focus:border-cyan-500/50 focus:ring-cyan-500/20" 
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    className="bg-yarn-base border-zinc-800/50 text-zinc-100 font-mono min-h-[150px] rounded-sm focus:border-zinc-600 focus:ring-zinc-700/30 placeholder:text-zinc-600" 
                     placeholder="Describe your requirements..." 
                   />
                 </div>
 
-                <Button className="w-full bg-gradient-to-r from-cyan-600 to-fuchsia-600 hover:from-cyan-500 hover:to-fuchsia-500 text-white font-mono uppercase tracking-widest h-12">
-                  Transmit Data <ArrowRight className="ml-2 w-4 h-4" />
+                <Button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-zinc-100 hover:bg-white text-zinc-900 font-mono uppercase h-12 rounded-sm transition-colors duration-150 disabled:opacity-50"
+                >
+                  {isSubmitting ? "Transmitting..." : "Transmit Data"}
+                  <ArrowRight className="ml-2 size-4" />
                 </Button>
               </form>
             )}
+          </div>
+
+          {/* Alternative Contact */}
+          <div className="mt-8 text-center">
+            <p className="text-zinc-600 font-mono text-xs">
+              Prefer direct contact?{" "}
+              <a 
+                href="mailto:admin@yarndev.co.uk" 
+                className="text-zinc-400 hover:text-zinc-300 underline underline-offset-2 transition-colors duration-150"
+              >
+                admin@yarndev.co.uk
+              </a>
+            </p>
           </div>
 
         </div>
