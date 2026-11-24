@@ -13,7 +13,7 @@ const principles = [
   },
   {
     title: "Stay with it",
-    body: "We keep improving what we've built rather than moving on to the next idea.",
+    body: "We keep improving what we've built, and hand it over properly when it outgrows us.",
   },
 ]
 
@@ -30,8 +30,8 @@ export function About() {
             </h2>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-muted">
               Yarn started in 2021 building maths tools for a single teacher.
-              Each project after that came from a question someone in a school
-              asked us, and the hardest of those questions became Sendix.
+              Since then most of our work has stayed in education, and each
+              project has come from a question someone in a school asked us.
             </p>
           </div>
         </div>

@@ -37,16 +37,11 @@ export function Contact() {
         <div className="md:col-span-5">
           <p className="text-sm text-ink-muted">Contact</p>
           <h2 id="contact-heading" className="mt-4 text-display-l font-semibold">
-            Building something for education?
+            Tell us what you&rsquo;re making.
           </h2>
           <p className="mt-6 max-w-sm leading-relaxed text-ink-muted">
-            Tell us what you&rsquo;re working on. A few lines is enough to
-            start. If you&rsquo;re a school looking at Sendix, the quickest
-            route is{" "}
-            <a href="https://sendix.ai" target="_blank" rel="noopener" className="link text-ink">
-              sendix.ai
-            </a>
-            . Otherwise, email{" "}
+            A few lines is enough to start. If you would rather write directly,
+            email{" "}
             <a href="mailto:admin@yarndev.co.uk" className="link text-ink">
               admin@yarndev.co.uk
             </a>

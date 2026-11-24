@@ -1,4 +1,4 @@
-export type ProjectStatus = "Live" | "Venture Lab" | "Retired"
+export type ProjectStatus = "Live" | "Venture Lab" | "Handed over" | "Retired"
 
 export interface Project {
   slug: string
@@ -18,8 +18,7 @@ export interface Project {
 }
 
 /*
- * Ordered as a path: the education work that led to Sendix first,
- * then the rest of the studio's work.
+ * Education work first, in the order it was built, then the studio's other work.
  */
 export const projects: Project[] = [
   {
@@ -46,6 +45,17 @@ export const projects: Project[] = [
     stat: { value: "500+", label: "papers generated" },
     colour: "#d9a441",
     logo: { src: "/logos/qgenie.png", width: 1200, height: 562 },
+  },
+  {
+    slug: "sendix-mvp",
+    name: "Sendix MVP",
+    sector: "SEND",
+    status: "Handed over",
+    summary:
+      "We drafted the first MVP of a tool that checked Education, Health and Care Plans against the statutory guidance, built with a teacher who raised the problem. The product and its IP were assigned to Sendix AI Limited, which develops it today.",
+    lesson: "Schools care less about how a plan is worded than whether the support in it is working.",
+    stack: ["Next.js", "FastAPI", "PostgreSQL", "Azure"],
+    colour: "#3f7d5c",
   },
   {
     slug: "servstu",

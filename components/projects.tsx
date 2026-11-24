@@ -19,13 +19,13 @@ export function Projects() {
   return (
     <section id="work" className="border-t border-line py-24 md:py-36" aria-labelledby="work-heading">
       <div className="container">
-        <SectionHeader id="work-heading" label="The work that led here">
-          It started with one maths teacher.
+        <SectionHeader id="work-heading" label="Selected work">
+          Five years of software, most of it for classrooms.
         </SectionHeader>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted md:ml-[25%]">
-          Each classroom tool taught us something we used in the next. Alongside
-          them we built for marketplaces and analytics, which is where we learned
-          to handle real data at scale.
+          It started with one maths teacher. Each education project taught us
+          something we used in the next, and a few products in marketplaces and
+          analytics taught us to handle real data at scale.
         </p>
 
         <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-12">

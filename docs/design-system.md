@@ -21,21 +21,25 @@ Tokens live in `app/globals.css` and are exposed to Tailwind in `tailwind.config
 Project swatches each have their own thread colour (in `lib/projects.ts`). Those
 colours appear only inside swatches, never in UI chrome.
 
-The Sendix product window (`components/sendix.tsx`) is the one place that uses
-another palette: Sendix's own warm paper, forest green (`#1c6a44`) and sunflower
-(`#f2bb3a`), so it reads as a window into that product. Status colours there
-follow the Sendix app: green for Working and Achieved, sunflower for Partly
-working, amber for Not working (never red), and a hollow dot for Not enough
-evidence yet.
+## Logo
+
+The original Yarn logo (gold ball of yarn, bold maroon "Yarn"), vectorised from
+the original artwork with potrace and optimised with svgo:
+
+- `public/logo.svg`: original colours, for light backgrounds.
+- `public/logo-on-dark.svg`: the wordmark in `ink` for this site's dark surfaces
+  (maroon on the dark background is too low in contrast to read).
+- `public/mark.svg`, `icon-512.png`, `apple-touch-icon.png`: the ball on its own.
+- `public/og.png`: share card, original logo on warm paper.
+
+Logo colours: gold `#d6af69`, maroon `#800707`.
 
 ## Story
 
-The page is ordered as an argument: we build software for education (hero),
-here is what we are building now and how to read it (Sendix), here is the work
-that led to it (index, education projects first), what we build, who we are, and
-it closes on Sendix's vision. Sendix copy follows the Sendix claim rules: no
-invented numbers or customers, "connects to your MIS from day one", no
-compliance language, initials only for children.
+Yarn is presented as a studio whose work has mostly been in education: the
+hero keeps the brand line, the work index lists education projects first in the
+order they were built, then the rest. Sendix appears only as the MVP Yarn
+drafted, with its IP noted as assigned to Sendix AI Limited.
 
 ## Type
 

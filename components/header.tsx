@@ -5,8 +5,8 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 const links = [
-  { label: "Sendix", href: "/#sendix" },
   { label: "Work", href: "/#work" },
+  { label: "Services", href: "/#services" },
   { label: "About", href: "/#about" },
 ]
 
@@ -38,19 +38,9 @@ export function Header() {
       )}
     >
       <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5" onClick={close}>
-          <svg viewBox="0 0 24 24" className="size-[22px]" aria-hidden="true">
-            <circle cx="12" cy="12" r="10.5" fill="var(--madder)" />
-            <path
-              d="M4.5 8.5c4.5.8 9.8 5.6 11.6 12.4M8.2 3.6c3.2 3.3 6.6 10 6.9 17.6M2.4 13.6c5.3-1.4 11.4.3 15.6 4.6M13 1.8c1.5 3.2 5.3 6.4 9.2 7.4"
-              fill="none"
-              stroke="var(--bg)"
-              strokeWidth="1.3"
-              strokeLinecap="round"
-            />
-          </svg>
-          <span className="text-[1.0625rem] font-semibold tracking-tight">Yarn</span>
-          <span className="sr-only">Development, home</span>
+        <Link href="/" className="flex items-center" onClick={close}>
+          {/* The original Yarn logo, vectorised; wordmark recoloured for the dark header */}
+          <img src="/logo-on-dark.svg" alt="Yarn Development, home" width={1507} height={466} className="h-9 w-auto" />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
@@ -60,7 +50,7 @@ export function Header() {
             </a>
           ))}
           <a href="/#contact" className="btn btn-solid h-9 px-4 text-sm">
-            Work with us
+            Get in touch
           </a>
         </nav>
 

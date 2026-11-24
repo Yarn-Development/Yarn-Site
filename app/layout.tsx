@@ -24,18 +24,16 @@ export const metadata: Metadata = {
   
   // Primary SEO
   title: {
-    default: 'Yarn Development | Educational software, and the makers of Sendix',
+    default: 'Yarn Development | Software is woven, not just written',
     template: '%s | Yarn Development',
   },
-  description: 'Yarn Development builds software for education: maths assessment, exam generation and Sendix, which shows schools whether each child’s support is working.',
+  description: 'Yarn Development is a UK software studio that has spent five years building for education: maths assessment, exam generation and tools for special educational needs.',
   keywords: [
     'Yarn Development',
-    'Sendix',
     'educational software',
     'EdTech UK',
     'software for schools',
     'SEND software',
-    'support plan evidence',
     'maths assessment software',
     'exam generation',
   ],
@@ -67,11 +65,11 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     url: 'https://yarndev.co.uk',
     siteName: 'Yarn Development',
-    title: 'Yarn Development | Educational software',
-    description: 'Software for education, built with teachers since 2021. Our newest product, Sendix, shows schools whether each child’s support is working.',
+    title: 'Yarn Development | Software for education',
+    description: 'Software is woven, not just written. A UK studio building software for education since 2021.',
     images: [
       {
-        url: '/yarntp.png',
+        url: '/og.png',
         width: 1200,
         height: 630,
         alt: 'Yarn Development - Educational software',
@@ -83,21 +81,21 @@ export const metadata: Metadata = {
   // Twitter/X Card
   twitter: {
     card: 'summary_large_image',
-    title: 'Yarn Development | Educational software',
-    description: 'Software for education, built with teachers since 2021. The makers of Sendix.',
+    title: 'Yarn Development | Software for education',
+    description: 'Software is woven, not just written. A UK studio building software for education since 2021.',
     site: '@yarndev',
     creator: '@aspekts',
-    images: ['/yarntp.png'],
+    images: ['/og.png'],
   },
   
   // Icons
   icons: {
     icon: [
-      { url: '/yarntp.svg', type: 'image/svg+xml' },
-      { url: '/yarntp.png', type: 'image/png' },
+      { url: '/mark.svg', type: 'image/svg+xml' },
+      { url: '/icon-512.png', type: 'image/png' },
     ],
-    apple: '/yarntp.png',
-    shortcut: '/yarntp.png',
+    apple: '/apple-touch-icon.png',
+    shortcut: '/icon-512.png',
   },
   
   // Manifest for PWA
@@ -119,11 +117,11 @@ const jsonLd = {
       url: 'https://yarndev.co.uk',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://yarndev.co.uk/yarntp.png',
+        url: 'https://yarndev.co.uk/icon-512.png',
         width: 512,
         height: 512,
       },
-      description: 'A UK studio building software for education, and the makers of Sendix.',
+      description: 'A UK software studio building for education since 2021.',
       email: 'admin@yarndev.co.uk',
       sameAs: [
         'https://github.com/Yarn-Development',
@@ -167,8 +165,8 @@ const jsonLd = {
       '@type': 'WebPage',
       '@id': 'https://yarndev.co.uk/#webpage',
       url: 'https://yarndev.co.uk',
-      name: 'Yarn Development | Educational software',
-      description: 'Software for education, built with teachers since 2021. The makers of Sendix.',
+      name: 'Yarn Development | Software for education',
+      description: 'Software is woven, not just written. A UK studio building software for education since 2021.',
       isPartOf: {
         '@id': 'https://yarndev.co.uk/#website',
       },
@@ -183,8 +181,8 @@ const jsonLd = {
       name: 'Yarn Development',
       description: 'Educational software: tools for teachers, evidence and progress tracking, and school data integrations.',
       url: 'https://yarndev.co.uk',
-      logo: 'https://yarndev.co.uk/yarntp.png',
-      image: 'https://yarndev.co.uk/yarntp.png',
+      logo: 'https://yarndev.co.uk/logo.svg',
+      image: 'https://yarndev.co.uk/og.png',
       priceRange: '$$',
       areaServed: 'United Kingdom',
       serviceType: [

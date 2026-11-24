@@ -4,22 +4,22 @@ const services = [
   {
     title: "Tools for teachers",
     body: "Assessment, marking and question generation that fit how a department already works, with LaTeX where maths needs it.",
-    detail: "Nicolaou's Maths, QGenie",
+    detail: "Nicolaou's Maths",
   },
   {
-    title: "Evidence and progress",
-    body: "Bringing records from many places into one clear view of how a pupil is doing, written so a family can follow it too.",
-    detail: "Sendix",
+    title: "Generated learning materials",
+    body: "Exam papers and practice sets generated to a specification, with difficulty set question by question and a teacher in control of the result.",
+    detail: "QGenie",
   },
   {
-    title: "Working with school data",
-    body: "Connecting to the systems schools already use, from MIS data to Microsoft 365 folders and forms, so staff don't type anything twice.",
-    detail: "Sendix",
+    title: "Special educational needs",
+    body: "Software for the plans behind children with extra support, built alongside the staff who write and review them.",
+    detail: "Sendix MVP",
   },
   {
-    title: "AI that shows its working",
-    body: "Language models used where they save staff time, with every suggestion traced back to the document it came from.",
-    detail: "Sendix, QGenie, Statisfy",
+    title: "Data products",
+    body: "Marketplaces and analytics that taught us to handle real data at scale, which every education product needs sooner or later.",
+    detail: "ServStu, Statisfy",
   },
 ]
 
@@ -27,8 +27,8 @@ export function Services() {
   return (
     <section id="services" className="border-t border-line py-24 md:py-36" aria-labelledby="services-heading">
       <div className="container">
-        <SectionHeader id="services-heading" label="What we build">
-          Software that gives teachers time back and shows its evidence.
+        <SectionHeader id="services-heading" label="What we do">
+          We build software for teachers, and the children they support.
         </SectionHeader>
 
         <ol className="mt-14 grid gap-x-10 md:mt-20 md:grid-cols-12">
@@ -43,7 +43,7 @@ export function Services() {
               <h3 className="text-2xl font-medium tracking-tight md:col-span-3">{service.title}</h3>
               <div className="md:col-span-5">
                 <p className="leading-relaxed text-ink-muted">{service.body}</p>
-                <p className="mt-3 text-sm text-ink-faint">Seen in {service.detail}</p>
+                <p className="mt-3 text-sm text-ink-faint">See {service.detail}</p>
               </div>
             </li>
           ))}
