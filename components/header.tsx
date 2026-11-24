@@ -1,123 +1,89 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
-import Image from "next/image"
+import { useEffect, useState } from "react"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 
+const links = [
+  { label: "Work", href: "/#work" },
+  { label: "Services", href: "/#services" },
+  { label: "About", href: "/#about" },
+]
+
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
-    setIsMenuOpen(false)
-  }
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false)
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [menuOpen])
 
-  const navLinks = [
-    { name: "Services", id: "services" },
-    { name: "About", id: "about" },
-    { name: "Work", id: "projects" },
-  ]
+  const close = () => setMenuOpen(false)
 
   return (
-    <header 
+    <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-colors duration-150",
-        isScrolled 
-          ? "bg-yarn-base/90 border-b border-zinc-800/50 py-3" 
-          : "bg-transparent py-5"
+        "fixed inset-x-0 top-0 z-50 border-b transition-colors duration-200",
+        scrolled || menuOpen ? "border-line bg-bg" : "border-transparent bg-transparent",
       )}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          
-          {/* Logo */}
-          <div 
-            className="flex items-center gap-3 cursor-pointer group" 
-            onClick={() => scrollToSection("hero")}
-          >
-            <div className="size-9 bg-yarn-surface border border-zinc-800/50 rounded-sm flex items-center justify-center group-hover:border-zinc-700 transition-colors duration-150">
-              <Image 
-                src="/yarntp.svg" 
-                alt="Yarn Development" 
-                width={24} 
-                height={24} 
-                className="object-contain"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-sans font-semibold text-white">Yarn</span>
-              <span className="text-[10px] font-mono text-zinc-600 uppercase">Development</span>
-            </div>
-          </div>
+      <div className="container flex h-16 items-center justify-between">
+        <Link href="/" className="flex items-center" onClick={close}>
+          {/* The original Yarn logo, vectorised; wordmark recoloured for the dark header */}
+          <img src="/logo-on-dark.svg" alt="Yarn Development, home" width={1507} height={466} className="h-9 w-auto" />
+        </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-            {navLinks.map((link) => (
-              <button 
-                key={link.name}
-                onClick={() => scrollToSection(link.id)} 
-                className="text-sm font-sans text-zinc-500 hover:text-white transition-colors duration-150"
-              >
-                {link.name}
-              </button>
-            ))}
-            
-            <Button
-              size="sm"
-              className="bg-white text-zinc-900 hover:bg-zinc-200 font-sans text-xs rounded-sm h-8 px-4 transition-colors duration-150"
-              onClick={() => scrollToSection("contact")}
-            >
-              Get in Touch
-            </Button>
-          </nav>
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
+          {links.map((l) => (
+            <a key={l.href} href={l.href} className="text-[0.9375rem] text-ink-muted transition-colors duration-200 hover:text-ink">
+              {l.label}
+            </a>
+          ))}
+          <a href="/#contact" className="btn btn-solid h-9 px-4 text-sm">
+            Get in touch
+          </a>
+        </nav>
 
-          {/* Mobile Menu Toggle */}
-          <button 
-            className="md:hidden text-zinc-400 hover:text-white transition-colors duration-150" 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {isMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-        </div>
-
-        {/* Mobile Nav */}
-        {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-yarn-base border-b border-zinc-800/50 p-4">
-            <nav className="flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <button 
-                  key={link.name}
-                  onClick={() => scrollToSection(link.id)} 
-                  className="text-left text-zinc-400 hover:text-white py-3 font-sans text-sm border-b border-zinc-800/30 last:border-0 transition-colors duration-150"
-                >
-                  {link.name}
-                </button>
-              ))}
-              <Button 
-                onClick={() => scrollToSection("contact")} 
-                className="w-full bg-white text-zinc-900 hover:bg-zinc-200 mt-4 rounded-sm transition-colors duration-150"
-              >
-                Get in Touch
-              </Button>
-            </nav>
-          </div>
-        )}
+        <button
+          type="button"
+          className="-mr-2 p-2 text-sm md:hidden"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen((o) => !o)}
+        >
+          {menuOpen ? "Close" : "Menu"}
+        </button>
       </div>
+
+      <nav
+        id="mobile-menu"
+        aria-label="Main"
+        inert={!menuOpen}
+        className={cn(
+          "absolute inset-x-0 top-full border-b border-line bg-bg px-5 pb-8 pt-2 transition-[opacity,transform] duration-200 ease-out md:hidden",
+          menuOpen ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0",
+        )}
+      >
+        <ul>
+          {[...links, { label: "Contact", href: "/#contact" }].map((l) => (
+            <li key={l.href} className="border-b border-line">
+              <a href={l.href} onClick={close} className="block py-4 text-2xl font-medium tracking-tight">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </header>
   )
 }

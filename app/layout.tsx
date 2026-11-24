@@ -1,37 +1,13 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Schibsted_Grotesk } from 'next/font/google'
 import './globals.css'
 import { Toaster } from "@/components/ui/toaster"
 
-// Geist Sans - Primary heading font
-const geistSans = Geist({ 
+// One family for everything; hierarchy comes from size, weight and colour
+const sans = Schibsted_Grotesk({
   subsets: ['latin'],
-  variable: '--font-geist-sans',
+  variable: '--font-sans',
   display: 'swap',
-})
-
-// Geist Mono - Technical/code font
-const geistMono = Geist_Mono({ 
-  subsets: ['latin'],
-  variable: '--font-geist-mono',
-  display: 'swap',
-})
-
-// Inter - Body text font
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-// Editorial New - Serif accent font (fallback to system serif if not available)
-// Using Playfair Display as a fallback since Editorial New requires licensing
-const editorial = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-editorial',
-  display: 'swap',
-  style: ['normal', 'italic'],
 })
 
 // Viewport configuration for mobile optimization
@@ -39,7 +15,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#030303',
+  themeColor: '#0f0e0c',
 }
 
 export const metadata: Metadata = {
@@ -48,24 +24,18 @@ export const metadata: Metadata = {
   
   // Primary SEO
   title: {
-    default: 'Yarn Development | Creative Technology Studio in the UK',
+    default: 'Yarn Development | Software is woven, not just written',
     template: '%s | Yarn Development',
   },
-  description: 'Software is woven, not just written. Yarn Development is a UK-based creative technology studio specializing in full-stack development, AI integration, and EdTech platforms. We transform ambitious ideas into scalable digital products.',
+  description: 'Yarn Development is a UK software studio that has spent five years building for education: maths assessment, exam generation and tools for special educational needs.',
   keywords: [
     'Yarn Development',
-    'web development UK',
-    'software engineering',
-    'creative technology studio',
-    'full-stack development',
-    'Next.js development',
-    'React developers',
-    'AI integration',
-    'EdTech platforms',
-    'custom software development',
-    'Supabase',
-    'TypeScript',
-    'digital product development',
+    'educational software',
+    'EdTech UK',
+    'software for schools',
+    'SEND software',
+    'maths assessment software',
+    'exam generation',
   ],
   authors: [{ name: 'Yarn Development', url: 'https://yarndev.co.uk' }],
   creator: 'Yarn Development',
@@ -95,14 +65,14 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     url: 'https://yarndev.co.uk',
     siteName: 'Yarn Development',
-    title: 'Yarn Development | Creative Technology Studio',
-    description: 'Software is woven, not just written. A UK-based creative technology studio turning innovative concepts into scalable digital products with full-stack development, AI integration, and EdTech expertise.',
+    title: 'Yarn Development | Software for education',
+    description: 'Software is woven, not just written. A UK studio building software for education since 2021.',
     images: [
       {
-        url: '/yarntp.png',
+        url: '/og.png',
         width: 1200,
         height: 630,
-        alt: 'Yarn Development - Creative Technology Studio',
+        alt: 'Yarn Development - Educational software',
         type: 'image/png',
       },
     ],
@@ -111,21 +81,21 @@ export const metadata: Metadata = {
   // Twitter/X Card
   twitter: {
     card: 'summary_large_image',
-    title: 'Yarn Development | Creative Technology Studio',
-    description: 'Software is woven, not just written. Full-stack development, AI integration, and EdTech platforms.',
+    title: 'Yarn Development | Software for education',
+    description: 'Software is woven, not just written. A UK studio building software for education since 2021.',
     site: '@yarndev',
     creator: '@aspekts',
-    images: ['/yarntp.png'],
+    images: ['/og.png'],
   },
   
   // Icons
   icons: {
     icon: [
-      { url: '/yarntp.svg', type: 'image/svg+xml' },
-      { url: '/yarntp.png', type: 'image/png' },
+      { url: '/mark.svg', type: 'image/svg+xml' },
+      { url: '/icon-512.png', type: 'image/png' },
     ],
-    apple: '/yarntp.png',
-    shortcut: '/yarntp.png',
+    apple: '/apple-touch-icon.png',
+    shortcut: '/icon-512.png',
   },
   
   // Manifest for PWA
@@ -147,11 +117,11 @@ const jsonLd = {
       url: 'https://yarndev.co.uk',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://yarndev.co.uk/yarntp.png',
+        url: 'https://yarndev.co.uk/icon-512.png',
         width: 512,
         height: 512,
       },
-      description: 'A UK-based creative technology studio specializing in full-stack development, AI integration, and EdTech platforms.',
+      description: 'A UK software studio building for education since 2021.',
       email: 'admin@yarndev.co.uk',
       sameAs: [
         'https://github.com/Yarn-Development',
@@ -164,7 +134,7 @@ const jsonLd = {
         contactType: 'customer service',
         availableLanguage: 'English',
       },
-      foundingDate: '2024',
+      foundingDate: '2021',
       areaServed: {
         '@type': 'Country',
         name: 'United Kingdom',
@@ -185,7 +155,7 @@ const jsonLd = {
       '@id': 'https://yarndev.co.uk/#website',
       url: 'https://yarndev.co.uk',
       name: 'Yarn Development',
-      description: 'Creative Technology Studio - Software is woven, not just written.',
+      description: 'Educational software. Software is woven, not just written.',
       publisher: {
         '@id': 'https://yarndev.co.uk/#organization',
       },
@@ -195,8 +165,8 @@ const jsonLd = {
       '@type': 'WebPage',
       '@id': 'https://yarndev.co.uk/#webpage',
       url: 'https://yarndev.co.uk',
-      name: 'Yarn Development | Creative Technology Studio',
-      description: 'Software is woven, not just written. A UK-based creative technology studio turning innovative concepts into scalable digital products.',
+      name: 'Yarn Development | Software for education',
+      description: 'Software is woven, not just written. A UK studio building software for education since 2021.',
       isPartOf: {
         '@id': 'https://yarndev.co.uk/#website',
       },
@@ -209,54 +179,52 @@ const jsonLd = {
       '@type': 'ProfessionalService',
       '@id': 'https://yarndev.co.uk/#service',
       name: 'Yarn Development',
-      description: 'Full-stack development, AI integration, and EdTech platform development services.',
+      description: 'Educational software: tools for teachers, evidence and progress tracking, and school data integrations.',
       url: 'https://yarndev.co.uk',
-      logo: 'https://yarndev.co.uk/yarntp.png',
-      image: 'https://yarndev.co.uk/yarntp.png',
+      logo: 'https://yarndev.co.uk/logo.svg',
+      image: 'https://yarndev.co.uk/og.png',
       priceRange: '$$',
       areaServed: 'United Kingdom',
       serviceType: [
-        'Full-Stack Development',
-        'AI Integration',
+        'Educational Software Development',
         'EdTech Platform Development',
-        'Custom Software Development',
-        'Product Strategy',
-        'MVP Development',
+        'School Data Integration',
+        'AI for Education',
       ],
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
-        name: 'Development Services',
+        name: 'Educational software services',
         itemListElement: [
           {
             '@type': 'Offer',
             itemOffered: {
               '@type': 'Service',
-              name: 'Full-Stack Engineering',
-              description: 'Next.js, Supabase, and Vercel architecture. Scalable, type-safe applications with modern tooling.',
+              name: 'Tools for teachers',
+              description: 'Assessment, marking and question generation for schools.',
             },
           },
           {
             '@type': 'Offer',
             itemOffered: {
               '@type': 'Service',
-              name: 'AI Integration',
-              description: 'LLM implementation & RAG pipelines for intelligent applications.',
+              name: 'Evidence and progress',
+              description: 'One clear view of how each pupil is doing against their plan.',
             },
           },
           {
             '@type': 'Offer',
             itemOffered: {
               '@type': 'Service',
-              name: 'EdTech Platforms',
-              description: 'Specialized learning environments with real-time assessment tools.',
+              name: 'Working with school data',
+              description: 'Connecting to MIS data, Microsoft 365 folders and forms.',
             },
           },
           {
             '@type': 'Offer',
             itemOffered: {
               '@type': 'Service',
-              name: 'Product Strategy',
-              description: 'From napkin sketch to validated MVP. Bridging creative spark and technical execution.',
+              name: 'AI that shows its working',
+              description: 'Language models that save staff time, with every suggestion traced to its source.',
             },
           },
         ],
@@ -271,42 +239,21 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html 
-      lang="en-GB" 
-      className={`dark ${geistSans.variable} ${geistMono.variable} ${inter.variable} ${editorial.variable}`}
-    >
+    <html lang="en-GB" className={`dark ${sans.variable}`}>
       <head>
-        {/* JSON-LD Structured Data for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Preconnect to external resources */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* DNS prefetch for performance */}
-        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       </head>
-      <body 
-        className="font-body antialiased min-h-dvh"
-        style={{ 
-          backgroundColor: '#030303', 
-          color: '#fafafa',
-        }}
-      >
-        {/* Skip to main content for accessibility */}
-        <a 
-          href="#main-content" 
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-zinc-900 focus:rounded-sm"
+      <body className="min-h-dvh bg-bg font-sans text-ink antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-bg"
         >
-          Skip to main content
+          Skip to content
         </a>
-        
-        {/* Content Layer */}
-        <div className="relative z-10 flex flex-col min-h-dvh">
-          {children}
-        </div>
-        
+        {children}
         <Toaster />
       </body>
     </html>

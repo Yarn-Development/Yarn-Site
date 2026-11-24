@@ -2,78 +2,51 @@ import Link from "next/link"
 
 export function Footer() {
   return (
-    <footer className="border-t border-zinc-800/50 bg-yarn-base py-12" role="contentinfo">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8">
-          
-          {/* Main footer content */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            
-            {/* Brand */}
-            <div className="text-center md:text-left">
-              <h3 className="text-lg font-sans font-semibold text-zinc-100 text-balance">
-                Yarn Development
-              </h3>
-              <p className="text-xs font-mono text-zinc-600 mt-2">
-                Software is woven, not just written.
-              </p>
-            </div>
+    <footer className="border-t border-line py-12 md:py-16">
+      <div className="container grid gap-10 md:grid-cols-12">
+        <div className="md:col-span-6">
+          <p className="text-lg font-semibold tracking-tight">Yarn Development</p>
+          <p className="mt-1 text-ink-muted">Software is woven, not just written.</p>
+        </div>
 
-            {/* Social Links */}
-            <nav className="flex gap-8 text-sm font-mono text-zinc-500" aria-label="Social media links">
-              <a 
-                href="https://github.com/Yarn-Development" 
-                className="hover:text-zinc-300 transition-colors duration-150"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Yarn Development GitHub"
-              >
+        <nav aria-label="Elsewhere" className="text-sm md:col-span-3">
+          <ul className="grid gap-2">
+            <li>
+              <a href="https://github.com/Yarn-Development" target="_blank" rel="noopener noreferrer" className="text-ink-muted transition-colors duration-200 hover:text-ink">
                 GitHub
               </a>
-              <a 
-                href="https://linkedin.com/company/yarndev" 
-                className="hover:text-zinc-300 transition-colors duration-150"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Yarn Development LinkedIn"
-              >
+            </li>
+            <li>
+              <a href="https://linkedin.com/company/yarndev" target="_blank" rel="noopener noreferrer" className="text-ink-muted transition-colors duration-200 hover:text-ink">
                 LinkedIn
               </a>
-              <a 
-                href="mailto:admin@yarndev.co.uk" 
-                className="hover:text-zinc-300 transition-colors duration-150"
-                aria-label="Email Yarn Development"
-              >
-                Email
+            </li>
+            <li>
+              <a href="mailto:admin@yarndev.co.uk" className="text-ink-muted transition-colors duration-200 hover:text-ink">
+                admin@yarndev.co.uk
               </a>
-            </nav>
-          </div>
+            </li>
+          </ul>
+        </nav>
 
-          {/* Bottom bar with legal links and copyright */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-6 border-t border-zinc-800/30">
-            
-            {/* Legal Links */}
-            <nav className="flex gap-6 text-xs font-mono text-zinc-600" aria-label="Legal pages">
-              <Link 
-                href="/privacy" 
-                className="hover:text-zinc-400 transition-colors duration-150"
-              >
-                Privacy Policy
+        <nav aria-label="Legal" className="text-sm md:col-span-3">
+          <ul className="grid gap-2">
+            <li>
+              <Link href="/privacy" className="text-ink-muted transition-colors duration-200 hover:text-ink">
+                Privacy policy
               </Link>
-              <Link 
-                href="/terms" 
-                className="hover:text-zinc-400 transition-colors duration-150"
-              >
-                Terms of Service
+            </li>
+            <li>
+              <Link href="/terms" className="text-ink-muted transition-colors duration-200 hover:text-ink">
+                Terms of service
               </Link>
-            </nav>
+            </li>
+          </ul>
+        </nav>
 
-            {/* Copyright */}
-            <p className="text-xs font-mono text-zinc-600">
-              © {new Date().getFullYear()} Yarn Development. All rights reserved.
-            </p>
-          </div>
-        </div>
+        <p className="text-sm text-ink-faint md:col-span-12">
+          © {new Date().getFullYear()} Yarn Development. Made in the UK.
+        </p>
       </div>
     </footer>
   )

@@ -1,188 +1,131 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { ArrowRight, CheckCircle } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
+const PROJECT_TYPES = ["Software for a school or trust", "An education product", "Something else"]
 
-interface FormData {
-  name: string
-  email: string
-  company: string
-  projectType: string
-  description: string
-}
+type Status = "idle" | "sending" | "sent" | "error"
 
 export function Contact() {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    company: "",
-    projectType: "Full-Stack Development",
-    description: ""
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
+  const [status, setStatus] = useState<Status>("idle")
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus('idle')
+    const form = e.currentTarget
+    const data = Object.fromEntries(new FormData(form))
+    setStatus("sending")
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          to: 'admin@yarndev.co.uk',
-          subject: `New Project Inquiry: ${formData.projectType}`
-        }),
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       })
-
-      if (response.ok) {
-        setSubmitStatus('success')
-        setFormData({
-          name: "",
-          email: "",
-          company: "",
-          projectType: "Full-Stack Development",
-          description: ""
-        })
-      } else {
-        setSubmitStatus('error')
-      }
-    } catch (error) {
-      console.error('Form submission error:', error)
-      setSubmitStatus('error')
-    } finally {
-      setIsSubmitting(false)
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+      form.reset()
+      setStatus("sent")
+    } catch (err) {
+      console.error(err)
+      setStatus("error")
     }
   }
 
   return (
-    <section id="contact" className="py-32 relative" aria-labelledby="contact-heading">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto">
-          
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 id="contact-heading" className="text-4xl md:text-5xl font-sans font-bold text-zinc-100 mb-6 text-balance">
-              Initialize <em className="font-serif not-italic text-zinc-400">Connection</em>
-            </h2>
-            <p className="text-zinc-500 font-mono text-sm text-pretty">
-              Ready to weave your idea into code?
-            </p>
-          </div>
+    <section id="contact" className="border-t border-line py-24 md:py-36" aria-labelledby="contact-heading">
+      <div className="container grid gap-14 md:grid-cols-12">
+        <div className="md:col-span-5">
+          <p className="text-sm text-ink-muted">Contact</p>
+          <h2 id="contact-heading" className="mt-4 text-display-l font-semibold">
+            Tell us what you&rsquo;re making.
+          </h2>
+          <p className="mt-6 max-w-sm leading-relaxed text-ink-muted">
+            A few lines is enough to start. If you would rather write directly,
+            email{" "}
+            <a href="mailto:admin@yarndev.co.uk" className="link text-ink">
+              admin@yarndev.co.uk
+            </a>
+            .
+          </p>
+        </div>
 
-          {/* Form Container */}
-          <div className="bg-yarn-surface border border-zinc-800/50 rounded-sm p-8">
-            {submitStatus === 'success' ? (
-              <div className="text-center py-12">
-                <CheckCircle className="size-16 text-zinc-400 mx-auto mb-4" />
-                <h3 className="text-2xl text-zinc-100 font-sans font-semibold mb-2 text-balance">
-                  Message Received
-                </h3>
-                <p className="text-zinc-500 font-mono text-sm text-pretty">
-                  We will return the signal shortly.
+        <div className="md:col-span-6 md:col-start-7">
+          {status === "sent" ? (
+            <div role="status" className="rise rounded-lg border border-line p-8">
+              <p className="text-xl font-medium">Thanks, that&rsquo;s with us.</p>
+              <p className="mt-2 text-ink-muted">We&rsquo;ll reply by email soon.</p>
+              <button type="button" className="link mt-6 text-sm text-ink-muted" onClick={() => setStatus("idle")}>
+                Send another message
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="grid gap-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field label="Name" htmlFor="name">
+                  <input id="name" name="name" required autoComplete="name" className="field" />
+                </Field>
+                <Field label="Email" htmlFor="email">
+                  <input id="email" name="email" type="email" required autoComplete="email" className="field" />
+                </Field>
+              </div>
+              <Field label="Company" htmlFor="company" optional>
+                <input id="company" name="company" autoComplete="organization" className="field" />
+              </Field>
+              <Field label="What kind of project?" htmlFor="projectType">
+                <select id="projectType" name="projectType" defaultValue={PROJECT_TYPES[0]} className="field field-select">
+                  {PROJECT_TYPES.map((t) => (
+                    <option key={t} className="bg-bg-raised">
+                      {t}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+              <Field label="About the project" htmlFor="description">
+                <textarea
+                  id="description"
+                  name="description"
+                  required
+                  rows={5}
+                  placeholder="What you want to build, who it's for, and any timing we should know about."
+                  className="field resize-y"
+                />
+              </Field>
+
+              <div className="mt-2 flex flex-wrap items-center gap-4">
+                <button type="submit" className="btn btn-solid" disabled={status === "sending"}>
+                  {status === "sending" ? "Sending…" : "Send enquiry"}
+                  {status !== "sending" && <ArrowRight className="size-4" aria-hidden="true" />}
+                </button>
+                <p aria-live="polite" className="text-sm text-madder">
+                  {status === "error" && "That didn't send. Please try again, or email us directly."}
                 </p>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-xs font-mono text-zinc-500 uppercase">
-                      Name
-                    </label>
-                    <Input 
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="bg-yarn-base border-zinc-800/50 text-zinc-100 font-mono rounded-sm focus:border-zinc-600 focus:ring-zinc-700/30 placeholder:text-zinc-600" 
-                      placeholder="John Doe" 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-mono text-zinc-500 uppercase">
-                      Email
-                    </label>
-                    <Input 
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="bg-yarn-base border-zinc-800/50 text-zinc-100 font-mono rounded-sm focus:border-zinc-600 focus:ring-zinc-700/30 placeholder:text-zinc-600" 
-                      placeholder="john@example.com" 
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-mono text-zinc-500 uppercase">
-                    Project Type
-                  </label>
-                  <select 
-                    name="projectType"
-                    value={formData.projectType}
-                    onChange={handleInputChange}
-                    className="w-full h-10 rounded-sm bg-yarn-base border border-zinc-800/50 text-zinc-100 font-mono px-3 focus:outline-none focus:border-zinc-600 focus:ring-2 focus:ring-zinc-700/30"
-                  >
-                    <option className="bg-yarn-base">Full-Stack Development</option>
-                    <option className="bg-yarn-base">AI Integration</option>
-                    <option className="bg-yarn-base">EdTech Platform</option>
-                    <option className="bg-yarn-base">Custom Software</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-mono text-zinc-500 uppercase">
-                    Brief
-                  </label>
-                  <Textarea 
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    className="bg-yarn-base border-zinc-800/50 text-zinc-100 font-mono min-h-[150px] rounded-sm focus:border-zinc-600 focus:ring-zinc-700/30 placeholder:text-zinc-600" 
-                    placeholder="Describe your requirements..." 
-                  />
-                </div>
-
-                <Button 
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-zinc-100 hover:bg-white text-zinc-900 font-mono uppercase h-12 rounded-sm transition-colors duration-150 disabled:opacity-50"
-                >
-                  {isSubmitting ? "Transmitting..." : "Transmit Data"}
-                  <ArrowRight className="ml-2 size-4" />
-                </Button>
-              </form>
-            )}
-          </div>
-
-          {/* Alternative Contact */}
-          <div className="mt-8 text-center">
-            <p className="text-zinc-600 font-mono text-xs">
-              Prefer direct contact?{" "}
-              <a 
-                href="mailto:admin@yarndev.co.uk" 
-                className="text-zinc-400 hover:text-zinc-300 underline underline-offset-2 transition-colors duration-150"
-              >
-                admin@yarndev.co.uk
-              </a>
-            </p>
-          </div>
-
+            </form>
+          )}
         </div>
       </div>
     </section>
+  )
+}
+
+function Field({
+  label,
+  htmlFor,
+  optional,
+  children,
+}: {
+  label: string
+  htmlFor: string
+  optional?: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <div className="grid gap-2">
+      <label htmlFor={htmlFor} className="text-sm text-ink-muted">
+        {label}
+        {optional && <span className="text-ink-faint"> (optional)</span>}
+      </label>
+      {children}
+    </div>
   )
 }
