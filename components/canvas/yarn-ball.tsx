@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
+import { Component, useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import * as THREE from "three"
 
@@ -1160,11 +1160,59 @@ function usePrefersReducedMotion() {
   return reduced
 }
 
+/*
+ * Some browsers can't create a WebGL context at all: hardware acceleration off,
+ * a blocklisted GPU driver, remote desktops and some VMs (Firefox reports this as
+ * FEATURE_FAILURE_EGL_NO_CONFIG / WEBGL_EXHAUSTED_DRIVERS). They get a still of
+ * the finished ball instead of an empty hero.
+ */
+function canUseWebGL() {
+  try {
+    const canvas = document.createElement("canvas")
+    const gl = canvas.getContext("webgl2") ?? canvas.getContext("webgl")
+    if (!gl) return false
+    gl.getExtension("WEBGL_lose_context")?.loseContext()
+    return true
+  } catch {
+    return false
+  }
+}
+
+function StillBall() {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/yarn-ball.webp"
+      alt=""
+      width={635}
+      height={620}
+      className="absolute left-1/2 top-[10%] w-[72vw] max-w-sm -translate-x-1/2 md:left-auto md:right-0 md:top-[19%] md:w-[44vw] md:max-w-none md:translate-x-0"
+    />
+  )
+}
+
+/** Catches a renderer that fails after the support check passed (lost or refused context). */
+class WebGLBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+  static getDerivedStateFromError() {
+    return { failed: true }
+  }
+  componentDidCatch(error: unknown) {
+    console.warn("Yarn ball: WebGL unavailable, showing a still image instead.", error)
+  }
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children
+  }
+}
+
 export function YarnBall() {
   const wrapper = useRef<HTMLDivElement>(null)
   const pointer = useRef({ x: 0, y: 0 })
   const [visible, setVisible] = useState(true)
   const reducedMotion = usePrefersReducedMotion()
+  const [webgl, setWebgl] = useState<boolean | null>(null)
+
+  useEffect(() => setWebgl(canUseWebGL()), [])
 
   // Only render frames while the hero is on screen
   useEffect(() => {
@@ -1188,19 +1236,24 @@ export function YarnBall() {
 
   return (
     <div ref={wrapper} className="absolute inset-0" aria-hidden="true">
-      <Canvas
-        frameloop={visible ? "always" : "never"}
-        camera={{ position: [0, 0, 6], fov: 40 }}
-        dpr={[1, 1.75]}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      >
-        {/* Warm studio wool lighting: soft ivory key, rich apricot rim for fuzz halo, warm bounce */}
-        <hemisphereLight args={["#ffecda", "#220f0a", 0.78]} />
-        <directionalLight position={[-3.2, 4.0, 3.5]} intensity={2.75} color="#fff2e0" />
-        <directionalLight position={[3.6, 2.4, -3.2]} intensity={2.35} color="#ffbc94" />
-        <directionalLight position={[-2.5, -3.2, 2.0]} intensity={0.55} color="#9e4024" />
-        <Ball reducedMotion={reducedMotion} pointer={pointer} />
-      </Canvas>
+      {webgl === false && <StillBall />}
+      {webgl && (
+        <WebGLBoundary fallback={<StillBall />}>
+          <Canvas
+            frameloop={visible ? "always" : "never"}
+            camera={{ position: [0, 0, 6], fov: 40 }}
+            dpr={[1, 1.75]}
+            gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+          >
+            {/* Warm studio wool lighting: soft ivory key, rich apricot rim for fuzz halo, warm bounce */}
+            <hemisphereLight args={["#ffecda", "#220f0a", 0.78]} />
+            <directionalLight position={[-3.2, 4.0, 3.5]} intensity={2.75} color="#fff2e0" />
+            <directionalLight position={[3.6, 2.4, -3.2]} intensity={2.35} color="#ffbc94" />
+            <directionalLight position={[-2.5, -3.2, 2.0]} intensity={0.55} color="#9e4024" />
+            <Ball reducedMotion={reducedMotion} pointer={pointer} />
+          </Canvas>
+        </WebGLBoundary>
+      )}
     </div>
   )
 }
