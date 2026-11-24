@@ -1,148 +1,160 @@
 "use client"
 
-import { motion } from "motion/react"
-import { FeaturedProjectCard, ProjectCard, type Project } from "@/components/ui/project-card"
-import { Button } from "@/components/ui/button"
-import { Github } from "lucide-react"
+import { useState } from "react"
+import { ArrowUpRight, Plus } from "lucide-react"
+import { projects } from "@/lib/projects"
+import { Swatch } from "@/components/swatch"
+import { SectionHeader } from "@/components/section-header"
+import { cn } from "@/lib/utils"
 
-// Project data with new hierarchy per specification
-const projects: Project[] = [
-  {
-    title: "Nicolaou's Maths",
-    description: "Comprehensive workflow automation for STEM education. Real-time assessment tools, LaTeX rendering, and intelligent question generation for mathematics instruction.",
-    tags: ["Next.js", "LaTeX", "Real-time", "PostgreSQL"],
-    category: "EdTech",
-    status: "Live",
-    stats: "1,000+ Assessments Generated",
-    featured: true,
-  },
-  {
-    title: "ServStu",
-    description: "Complex marketplace architecture connecting service providers with clients. Multi-tenant system with real-time booking, payments, and analytics dashboards.",
-    tags: ["React", "Node.js", "Stripe", "WebSockets"],
-    category: "Marketplace",
-    status: "Live",
-    stats: "500+ Active Providers",
-    featured: true,
-  },
-  {
-    title: "Sendix",
-    description: "AI-powered cold email platform with lead enrichment and GPT-4 personalization. High-stakes compliance for enterprise sales automation.",
-    tags: ["GPT-4", "Supabase", "TypeScript", "Compliance"],
-    category: "Venture Lab",
-    status: "Venture Lab",
-    stats: "99% Delivery Rate",
-    featured: false,
-  },
-  {
-    title: "Statisfy",
-    description: "Deep social media analytics using LLMs to interpret engagement metrics and provide actionable insights for content creators.",
-    tags: ["OpenAI", "React", "Node.js", "Analytics"],
-    category: "Venture Lab",
-    status: "Venture Lab",
-    stats: "1M+ Rows Analyzed",
-    featured: false,
-  },
-  {
-    title: "QGenie",
-    description: "LaTeX-formatted exam generation for STEM subjects using generative AI. Automated paper creation with difficulty calibration.",
-    tags: ["LaTeX", "MongoDB", "Express", "AI"],
-    category: "Venture Lab",
-    status: "Venture Lab",
-    stats: "500+ Papers Generated",
-    featured: false,
-  },
-]
-
+/*
+ * Work is an index, not a card grid. Hovering or focusing a row slides the
+ * matching swatch into the sticky frame on the left; clicking a row opens its
+ * notes in place. On small screens the swatch moves inside the opened row.
+ */
 export function Projects() {
-  const featuredProjects = projects.filter(p => p.featured)
-  const ventureLabProjects = projects.filter(p => !p.featured)
+  const [active, setActive] = useState(0)
+  const [open, setOpen] = useState<string | null>(null)
 
   return (
-    <section id="projects" className="py-24 md:py-32 bg-yarn-base" aria-labelledby="projects-heading">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-16"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-[1px] bg-zinc-700" />
-            <span className="text-xs font-mono text-zinc-600 uppercase">Case Studies</span>
-          </div>
-          
-          <h2 id="projects-heading" className="text-3xl md:text-4xl font-sans font-bold text-white mb-4 text-balance">
-            Selected <em className="font-serif text-zinc-400">Work</em>
-          </h2>
-          
-          <p className="text-zinc-500 max-w-xl text-pretty">
-            Process-first development. Each project represents a unique problem space 
-            and our systematic approach to solving it.
-          </p>
-        </motion.div>
+    <section id="work" className="border-t border-line py-24 md:py-36" aria-labelledby="work-heading">
+      <div className="container">
+        <SectionHeader id="work-heading" label="Selected work">
+          Five products, from classroom tools to sales automation.
+        </SectionHeader>
 
-        {/* Featured Projects - Bento Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-16">
-          {featuredProjects.map((project, index) => (
-            <FeaturedProjectCard
-              key={project.title}
-              project={project}
-              index={index}
-            />
-          ))}
+        <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-12">
+          {/* Sticky swatch frame (desktop) */}
+          <div className="hidden md:col-span-5 md:block">
+            <div className="sticky top-28">
+              <div className="aspect-[4/5] overflow-hidden rounded-lg">
+                <div
+                  className="flex h-full flex-col transition-transform duration-700 ease-in-out motion-reduce:transition-none"
+                  style={{ transform: `translateY(-${active * 100}%)` }}
+                >
+                  {projects.map((project, i) => (
+                    <div key={project.slug} className="h-full shrink-0" aria-hidden={i !== active}>
+                      <Swatch project={project} index={i} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <p className="mt-4 flex justify-between text-sm tabular-nums text-ink-faint" aria-hidden="true">
+                <span>{projects[active].sector}</span>
+                <span>
+                  {String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          {/* Index */}
+          <ol className="group/list md:col-span-7">
+            {projects.map((project, i) => {
+              const isOpen = open === project.slug
+              const panelId = `work-${project.slug}`
+              return (
+                <li key={project.slug} className="group/row border-b border-line first:border-t">
+                  <h3>
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      onPointerEnter={() => setActive(i)}
+                      onFocus={() => setActive(i)}
+                      onClick={() => {
+                        setActive(i)
+                        setOpen(isOpen ? null : project.slug)
+                      }}
+                      className="grid w-full grid-cols-[2.25rem_1fr_auto] items-baseline gap-x-4 py-6 text-left md:py-7"
+                    >
+                      <span className="text-sm tabular-nums text-ink-faint">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span
+                        className={cn(
+                          "text-display-m font-medium transition-colors duration-200",
+                          "group-hover/list:text-ink-faint group-hover/row:!text-ink",
+                        )}
+                      >
+                        {project.name}
+                      </span>
+                      <span className="flex items-center gap-4 text-sm text-ink-muted">
+                        <span className="hidden sm:inline">{project.sector}</span>
+                        <Plus
+                          className={cn(
+                            "size-4 transition-transform duration-200 ease-out",
+                            isOpen && "rotate-45",
+                          )}
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </button>
+                  </h3>
+
+                  <div
+                    id={panelId}
+                    role="region"
+                    aria-label={project.name}
+                    inert={!isOpen}
+                    className="grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none"
+                    style={{ gridTemplateRows: isOpen ? "1fr" : "0fr", opacity: isOpen ? 1 : 0 }}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="pb-10 sm:pl-[3.25rem]">
+                        <div className="mb-8 aspect-[4/5] max-w-xs overflow-hidden rounded-lg md:hidden">
+                          <Swatch project={project} index={i} />
+                        </div>
+
+                        <p className="max-w-prose text-lg leading-relaxed text-ink-muted">{project.summary}</p>
+
+                        <dl className="mt-8 grid grid-cols-2 gap-6 text-sm sm:grid-cols-3">
+                          <div>
+                            <dt className="text-ink-faint">Status</dt>
+                            <dd className="mt-1">{project.status}</dd>
+                          </div>
+                          <div>
+                            <dt className="text-ink-faint">Result</dt>
+                            <dd className="mt-1 tabular-nums">
+                              {project.stat.value} {project.stat.label}
+                            </dd>
+                          </div>
+                          <div className="col-span-2 sm:col-span-1">
+                            <dt className="text-ink-faint">Built with</dt>
+                            <dd className="mt-1">{project.stack.join(", ")}</dd>
+                          </div>
+                        </dl>
+
+                        {(project.href || project.github) && (
+                          <div className="mt-8 flex gap-6 text-sm">
+                            {project.href && (
+                              <a href={project.href} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">
+                                Visit site <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                              </a>
+                            )}
+                            {project.github && (
+                              <a href={project.github} target="_blank" rel="noopener noreferrer" className="link inline-flex items-center gap-1">
+                                Source <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                              </a>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              )
+            })}
+          </ol>
         </div>
 
-        {/* Venture Lab Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-4 h-[1px] bg-zinc-800" />
-            <span className="text-xs font-mono text-zinc-600 uppercase">Venture Lab</span>
-          </div>
-          
-          <p className="text-sm text-zinc-600 max-w-lg text-pretty">
-            Experimental projects and high-stakes ventures. These represent our R&D efforts 
-            in emerging technology spaces.
-          </p>
-        </motion.div>
-
-        {/* Venture Lab Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-          {ventureLabProjects.map((project, index) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              index={index}
-            />
-          ))}
-        </div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex justify-center"
-        >
-          <Button 
-            variant="outline" 
-            className="border-zinc-800 text-zinc-500 hover:bg-zinc-900 hover:text-white hover:border-zinc-700 rounded-sm font-mono text-xs uppercase transition-colors duration-150"
-            onClick={() => window.open('https://github.com/Yarn-Development', '_blank')}
-          >
-            <Github className="size-4 mr-2" />
-            View All on GitHub
-          </Button>
-        </motion.div>
+        <p className="mt-12 text-sm text-ink-muted md:text-right">
+          More of our open-source work is on{" "}
+          <a href="https://github.com/Yarn-Development" target="_blank" rel="noopener noreferrer" className="link text-ink">
+            GitHub
+          </a>
+          .
+        </p>
       </div>
     </section>
   )

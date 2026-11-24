@@ -1,37 +1,13 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Schibsted_Grotesk } from 'next/font/google'
 import './globals.css'
 import { Toaster } from "@/components/ui/toaster"
 
-// Geist Sans - Primary heading font
-const geistSans = Geist({ 
+// One family for everything; hierarchy comes from size, weight and colour
+const sans = Schibsted_Grotesk({
   subsets: ['latin'],
-  variable: '--font-geist-sans',
+  variable: '--font-sans',
   display: 'swap',
-})
-
-// Geist Mono - Technical/code font
-const geistMono = Geist_Mono({ 
-  subsets: ['latin'],
-  variable: '--font-geist-mono',
-  display: 'swap',
-})
-
-// Inter - Body text font
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-// Editorial New - Serif accent font (fallback to system serif if not available)
-// Using Playfair Display as a fallback since Editorial New requires licensing
-const editorial = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-editorial',
-  display: 'swap',
-  style: ['normal', 'italic'],
 })
 
 // Viewport configuration for mobile optimization
@@ -39,7 +15,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#030303',
+  themeColor: '#0f0e0c',
 }
 
 export const metadata: Metadata = {
@@ -271,42 +247,21 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html 
-      lang="en-GB" 
-      className={`dark ${geistSans.variable} ${geistMono.variable} ${inter.variable} ${editorial.variable}`}
-    >
+    <html lang="en-GB" className={`dark ${sans.variable}`}>
       <head>
-        {/* JSON-LD Structured Data for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* Preconnect to external resources */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* DNS prefetch for performance */}
-        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       </head>
-      <body 
-        className="font-body antialiased min-h-dvh"
-        style={{ 
-          backgroundColor: '#030303', 
-          color: '#fafafa',
-        }}
-      >
-        {/* Skip to main content for accessibility */}
-        <a 
-          href="#main-content" 
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-zinc-900 focus:rounded-sm"
+      <body className="min-h-dvh bg-bg font-sans text-ink antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-bg"
         >
-          Skip to main content
+          Skip to content
         </a>
-        
-        {/* Content Layer */}
-        <div className="relative z-10 flex flex-col min-h-dvh">
-          {children}
-        </div>
-        
+        {children}
         <Toaster />
       </body>
     </html>
