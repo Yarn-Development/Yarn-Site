@@ -1,4 +1,4 @@
-export type ProjectStatus = "Live" | "Venture Lab"
+export type ProjectStatus = "Live" | "Venture Lab" | "Retired"
 
 export interface Project {
   slug: string
@@ -6,8 +6,10 @@ export interface Project {
   sector: string
   status: ProjectStatus
   summary: string
+  /** One line on what this project taught us, shown in the opened row */
+  lesson?: string
   stack: string[]
-  stat: { value: string; label: string }
+  stat?: { value: string; label: string }
   /** Thread colour used for the project's swatch */
   colour: string
   logo?: { src: string; width: number; height: number }
@@ -15,6 +17,10 @@ export interface Project {
   github?: string
 }
 
+/*
+ * Ordered as a path: the education work that led to Sendix first,
+ * then the rest of the studio's work.
+ */
 export const projects: Project[] = [
   {
     slug: "nicolaous-maths",
@@ -22,10 +28,24 @@ export const projects: Project[] = [
     sector: "EdTech",
     status: "Live",
     summary:
-      "Workflow automation for maths teaching: real-time assessment, LaTeX rendering and question generation, so teachers spend their time teaching rather than formatting papers.",
+      "Our first product, built for one maths teacher: real-time assessment, LaTeX rendering and question generation, so lessons go on teaching rather than formatting papers.",
+    lesson: "Teachers will adopt a tool the week it saves them an evening.",
     stack: ["Next.js", "PostgreSQL", "LaTeX", "Real-time"],
     stat: { value: "1,000+", label: "assessments generated" },
     colour: "#d4512f",
+  },
+  {
+    slug: "qgenie",
+    name: "QGenie",
+    sector: "EdTech",
+    status: "Venture Lab",
+    summary:
+      "Generates LaTeX-formatted exam papers for STEM subjects, with difficulty calibrated per question rather than per paper.",
+    lesson: "Generated work is only useful when a teacher can see why it was made that way.",
+    stack: ["Express", "MongoDB", "LaTeX"],
+    stat: { value: "500+", label: "papers generated" },
+    colour: "#d9a441",
+    logo: { src: "/logos/qgenie.png", width: 1200, height: 562 },
   },
   {
     slug: "servstu",
@@ -37,18 +57,6 @@ export const projects: Project[] = [
     stack: ["React", "Node.js", "Stripe", "WebSockets"],
     stat: { value: "500+", label: "active providers" },
     colour: "#7d9a5b",
-  },
-  {
-    slug: "sendix",
-    name: "Sendix",
-    sector: "Sales automation",
-    status: "Venture Lab",
-    summary:
-      "Cold email with lead enrichment and model-written personalisation, built around the compliance requirements enterprise sales teams actually have.",
-    stack: ["Supabase", "TypeScript", "GPT-4"],
-    stat: { value: "99%", label: "delivery rate" },
-    colour: "#5a7bb5",
-    logo: { src: "/logos/sendix.png", width: 309, height: 62 },
   },
   {
     slug: "statisfy",
@@ -63,15 +71,15 @@ export const projects: Project[] = [
     logo: { src: "/logos/statisfy.png", width: 1200, height: 321 },
   },
   {
-    slug: "qgenie",
-    name: "QGenie",
-    sector: "EdTech",
-    status: "Venture Lab",
+    slug: "sendix-legacy",
+    name: "Sendix Legacy",
+    sector: "Sales automation",
+    status: "Retired",
     summary:
-      "Generates LaTeX-formatted exam papers for STEM subjects, with difficulty calibrated per question rather than per paper.",
-    stack: ["Express", "MongoDB", "LaTeX"],
-    stat: { value: "500+", label: "papers generated" },
-    colour: "#d9a441",
-    logo: { src: "/logos/qgenie.png", width: 1200, height: 562 },
+      "The first product to carry the Sendix name: cold email with lead enrichment and personalisation. The name has since moved to our tool for schools.",
+    stack: ["Supabase", "TypeScript", "GPT-4"],
+    stat: { value: "99%", label: "delivery rate" },
+    colour: "#5a7bb5",
+    logo: { src: "/logos/sendix.png", width: 309, height: 62 },
   },
 ]

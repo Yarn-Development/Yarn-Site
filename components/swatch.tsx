@@ -62,10 +62,12 @@ export function Swatch({
           )}
         </div>
 
-        <div className="mt-5 border-t border-[#cfc6b6] pt-4">
-          <p className="text-4xl font-semibold tabular-nums tracking-tight">{project.stat.value}</p>
-          <p className="mt-1 text-sm text-[#6b6458]">{project.stat.label}</p>
-        </div>
+        {project.stat && (
+          <div className="mt-5 border-t border-[#cfc6b6] pt-4">
+            <p className="text-4xl font-semibold tabular-nums tracking-tight">{project.stat.value}</p>
+            <p className="mt-1 text-sm text-[#6b6458]">{project.stat.label}</p>
+          </div>
+        )}
       </figcaption>
     </figure>
   )

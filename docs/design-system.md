@@ -21,6 +21,22 @@ Tokens live in `app/globals.css` and are exposed to Tailwind in `tailwind.config
 Project swatches each have their own thread colour (in `lib/projects.ts`). Those
 colours appear only inside swatches, never in UI chrome.
 
+The Sendix product window (`components/sendix.tsx`) is the one place that uses
+another palette: Sendix's own warm paper, forest green (`#1c6a44`) and sunflower
+(`#f2bb3a`), so it reads as a window into that product. Status colours there
+follow the Sendix app: green for Working and Achieved, sunflower for Partly
+working, amber for Not working (never red), and a hollow dot for Not enough
+evidence yet.
+
+## Story
+
+The page is ordered as an argument: we build software for education (hero),
+here is what we are building now and how to read it (Sendix), here is the work
+that led to it (index, education projects first), what we build, who we are, and
+it closes on Sendix's vision. Sendix copy follows the Sendix claim rules: no
+invented numbers or customers, "connects to your MIS from day one", no
+compliance language, initials only for children.
+
 ## Type
 
 One family, Schibsted Grotesk, for everything. Hierarchy comes from size, weight

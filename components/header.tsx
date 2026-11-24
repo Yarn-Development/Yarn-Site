@@ -5,8 +5,8 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 const links = [
+  { label: "Sendix", href: "/#sendix" },
   { label: "Work", href: "/#work" },
-  { label: "Services", href: "/#services" },
   { label: "About", href: "/#about" },
 ]
 
@@ -60,7 +60,7 @@ export function Header() {
             </a>
           ))}
           <a href="/#contact" className="btn btn-solid h-9 px-4 text-sm">
-            Start a project
+            Work with us
           </a>
         </nav>
 

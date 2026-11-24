@@ -1,19 +1,19 @@
 const principles = [
   {
-    title: "Remote, and async by default",
-    body: "We write things down, so work keeps moving across time zones without a meeting for every decision.",
+    title: "Teachers shape it",
+    body: "Every product so far started with a question from someone in a school.",
   },
   {
-    title: "Shipped beats specified",
-    body: "We measure progress in releases people can use, not in documents.",
+    title: "Plain words",
+    body: "If a parent or a new member of staff can't follow a screen, it isn't finished.",
   },
   {
-    title: "Design and engineering together",
-    body: "The people who design the interface also build it, so the details survive.",
+    title: "Show the evidence",
+    body: "A status or a suggestion always links back to where it came from.",
   },
   {
-    title: "Modern, not experimental",
-    body: "Current tools, chosen because they will still be maintained in five years.",
+    title: "Stay with it",
+    body: "We keep improving what we've built rather than moving on to the next idea.",
   },
 ]
 
@@ -22,18 +22,16 @@ export function About() {
     <section id="about" className="border-t border-line bg-bg-raised py-24 md:py-36" aria-labelledby="about-heading">
       <div className="container">
         <div className="grid gap-4 md:grid-cols-12">
-          <p className="text-sm text-ink-muted md:col-span-3 md:pt-3">About</p>
+          <p className="text-sm text-ink-muted md:col-span-3 md:pt-3">About Yarn</p>
           <div className="md:col-span-9">
             <h2 id="about-heading" className="text-display-m font-medium">
-              Yarn started from a simple idea: good software is woven, not just
-              written. Lots of small threads, pulled together carefully, until
-              they hold.
+              Good software is woven, not just written. Lots of small threads,
+              pulled together carefully, until they hold.
             </h2>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-muted">
-              We work somewhere between a university lab and an enterprise team.
-              We like ideas that are still raw and unstructured, and we turn them
-              into applications that scale and stay maintainable after we hand
-              them over.
+              Yarn started in 2021 building maths tools for a single teacher.
+              Each project after that came from a question someone in a school
+              asked us, and the hardest of those questions became Sendix.
             </p>
           </div>
         </div>

@@ -21,25 +21,25 @@ export function Hero() {
       <div className="container relative flex flex-col justify-end pb-10 pt-28 md:justify-center md:pb-16">
         <div className="rise" style={{ animationDelay: "120ms" }}>
           <h1 id="hero-heading" className="text-display-xl font-semibold">
-            <span className="block">Software is</span>
-            <span className="block">woven, not just</span>
-            <span className="block text-ink-muted">written.</span>
+            <span className="block">We build</span>
+            <span className="block">software for</span>
+            <span className="block text-ink-muted">education.</span>
           </h1>
         </div>
 
         <div className="rise mt-8 max-w-md" style={{ animationDelay: "220ms" }}>
           <p className="text-lg leading-relaxed text-ink-muted">
-            Yarn is a small product studio in the UK. We design and build web
-            platforms, AI features and learning tools, and see them all the
-            way to production.
+            Yarn has built tools for teachers since 2021, from maths
+            assessment to exam generation. Our newest, Sendix, shows schools
+            whether each child&rsquo;s support is working.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#contact" className="btn btn-solid">
-              Start a project
-            </a>
-            <a href="#work" className="btn btn-quiet">
-              See the work
+            <a href="#sendix" className="btn btn-solid">
+              See how Sendix works
               <ArrowDown className="size-4" aria-hidden="true" />
+            </a>
+            <a href="#contact" className="btn btn-quiet">
+              Work with us
             </a>
           </div>
         </div>

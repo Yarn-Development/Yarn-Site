@@ -19,9 +19,14 @@ export function Projects() {
   return (
     <section id="work" className="border-t border-line py-24 md:py-36" aria-labelledby="work-heading">
       <div className="container">
-        <SectionHeader id="work-heading" label="Selected work">
-          Five products, from classroom tools to sales automation.
+        <SectionHeader id="work-heading" label="The work that led here">
+          It started with one maths teacher.
         </SectionHeader>
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted md:ml-[25%]">
+          Each classroom tool taught us something we used in the next. Alongside
+          them we built for marketplaces and analytics, which is where we learned
+          to handle real data at scale.
+        </p>
 
         <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-12">
           {/* Sticky swatch frame (desktop) */}
@@ -39,7 +44,7 @@ export function Projects() {
                   ))}
                 </div>
               </div>
-              <p className="mt-4 flex justify-between text-sm tabular-nums text-ink-faint" aria-hidden="true">
+              <p className="mt-4 flex justify-between text-sm tabular-nums text-ink-muted" aria-hidden="true">
                 <span>{projects[active].sector}</span>
                 <span>
                   {String(active + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
@@ -107,18 +112,25 @@ export function Projects() {
                         </div>
 
                         <p className="max-w-prose text-lg leading-relaxed text-ink-muted">{project.summary}</p>
+                        {project.lesson && (
+                          <p className="mt-4 max-w-prose border-l-2 border-madder pl-4 leading-relaxed">
+                            What it taught us: {project.lesson}
+                          </p>
+                        )}
 
                         <dl className="mt-8 grid grid-cols-2 gap-6 text-sm sm:grid-cols-3">
                           <div>
                             <dt className="text-ink-faint">Status</dt>
                             <dd className="mt-1">{project.status}</dd>
                           </div>
-                          <div>
-                            <dt className="text-ink-faint">Result</dt>
-                            <dd className="mt-1 tabular-nums">
-                              {project.stat.value} {project.stat.label}
-                            </dd>
-                          </div>
+                          {project.stat && (
+                            <div>
+                              <dt className="text-ink-faint">Result</dt>
+                              <dd className="mt-1 tabular-nums">
+                                {project.stat.value} {project.stat.label}
+                              </dd>
+                            </div>
+                          )}
                           <div className="col-span-2 sm:col-span-1">
                             <dt className="text-ink-faint">Built with</dt>
                             <dd className="mt-1">{project.stack.join(", ")}</dd>

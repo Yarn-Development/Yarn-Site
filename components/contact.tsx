@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { ArrowRight } from "lucide-react"
 
-const PROJECT_TYPES = ["Full-stack product", "AI feature", "Learning platform", "Something else"]
+const PROJECT_TYPES = ["Software for a school or trust", "An education product", "Something else"]
 
 type Status = "idle" | "sending" | "sent" | "error"
 
@@ -37,11 +37,16 @@ export function Contact() {
         <div className="md:col-span-5">
           <p className="text-sm text-ink-muted">Contact</p>
           <h2 id="contact-heading" className="mt-4 text-display-l font-semibold">
-            Tell us what you&rsquo;re making.
+            Building something for education?
           </h2>
           <p className="mt-6 max-w-sm leading-relaxed text-ink-muted">
-            A few lines is enough to start. If you would rather write directly,
-            email{" "}
+            Tell us what you&rsquo;re working on. A few lines is enough to
+            start. If you&rsquo;re a school looking at Sendix, the quickest
+            route is{" "}
+            <a href="https://sendix.ai" target="_blank" rel="noopener" className="link text-ink">
+              sendix.ai
+            </a>
+            . Otherwise, email{" "}
             <a href="mailto:admin@yarndev.co.uk" className="link text-ink">
               admin@yarndev.co.uk
             </a>
